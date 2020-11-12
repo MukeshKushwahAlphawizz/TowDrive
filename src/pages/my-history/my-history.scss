@@ -1,0 +1,32 @@
+page-my-history {
+  .set-bg{
+    background: url("../assets/img/bg.png");
+    background-size: 100% 100%;
+  }
+  .price{
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  .grey-div{
+    background: #99999985;
+    padding: 6pt;
+  }
+  .round{
+    padding: 11pt 15pt;
+    border-radius: 50%;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    width: 40pt;
+    height: 40pt;
+  }
+  .item.item-block .item-inner{
+    padding-right: 0!important;
+  }
+  .middle{
+    margin: 5pt 0;
+  }
+  .top-margin{
+    margin-top: 3pt;
+  }
+}

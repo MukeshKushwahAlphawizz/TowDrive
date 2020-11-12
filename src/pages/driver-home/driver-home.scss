@@ -1,0 +1,38 @@
+page-driver-home {
+  .set-bg{
+    background: url("../assets/img/bg.png");
+    background-size: 100% 100%;
+  }
+  .set-no-margin, .label{
+    margin: 0!important;
+  }
+  .set-item{
+    background: white;
+    border-radius: 5px;
+  }
+  .user-image{
+    height: 80pt;
+    width: 60pt;
+    object-fit: cover;
+  }
+  .accept-reject-div{
+    position: absolute;
+    top: 10pt;
+    right: 8pt;
+    .accept-btn{
+      background: green;
+      color: white;
+      font-size: 1.1rem;
+      padding: 0 8pt;
+    }
+    .reject-btn{
+      background: red;
+      color: white;
+      font-size: 1.1rem;
+      padding: 0 8pt;
+    }
+  }
+  .middle{
+    margin: 5pt 0;
+  }
+}

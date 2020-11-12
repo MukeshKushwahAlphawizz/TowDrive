@@ -1,0 +1,81 @@
+page-chat {
+  .other-div-content{
+    margin-left: 30pt;
+  }
+  .other-user-img{
+    position: absolute;
+    height: 20pt;
+    width: 20pt;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .my-user-img{
+    height: 20pt;
+    width: 20pt;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .footer-md::before{
+    background: none;
+  }
+  .top-margin{
+    margin-top: 4pt;
+  }
+
+  .msg-content-left {
+    margin-right: 50pt;
+    background: #F4F4F4;
+    padding: 8pt 15pt 8pt 8pt;
+    border-radius: 10px;
+    float: left;
+    span.triangle {
+      background-color: #F4F4F4;
+      border-bottom-width: 0;
+      border-left-width: 0;
+    }
+  }
+
+  .msg-content-right {
+    color: #343434;
+    background: #FDDB3A;
+    float: right;
+    padding: 8pt 15pt 8pt 8pt;
+    border-radius: 10px 10px 0 10px;
+  }
+  .message-right{
+    margin: 5pt 0 10pt 50pt;
+  }
+  .send-icon{
+    background: #F7DB3A;
+  }
+  .chat-icons-div{
+    margin: 0 !important;
+    padding-right: 5pt;
+  }
+  .chat-icon{
+    font-size: 2rem;
+    height: 26pt;
+    width: 26pt;
+    padding: 5pt 5pt 6pt 8pt;
+    color: white;
+    background: #F7DB3A;
+    box-shadow: 7px 7px 5px #D8D8D8BF;
+    border-radius: 50%;
+  }
+  .chat-input{
+    width: 75%;
+    border: 1px solid #3B3B3B85;
+    border-radius: 5px;
+    padding: 5pt;
+    margin: 5pt !important;
+  }
+  .smily{
+    font-size: 3rem;
+    margin: 0 2pt !important;
+  }
+  ::placeholder {color: grey;opacity: 1;}
+  .item p {
+    color: black;
+  }
+}

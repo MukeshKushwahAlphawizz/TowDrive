@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons no-margin left>
+      <button class="text-black" padding-left no-margin ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center>Home</ion-title>
+    <ion-buttons end>
+      <button (click)="openNotif()" class="text-black" padding ion-button icon-only>
+        <ion-icon name="ios-notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons >
+  </ion-navbar>
+  <div text-center class="small-text light-bg small-padding">Your Location : Sector 62A, Noida <span margin-left><ion-icon name="md-create"></ion-icon></span></div>
+</ion-header>
+
+<ion-content class="set-bg">
+  <div class="padding-20">
+    <h3 class="left-padding text-white">Select Service</h3>
+    <div class="row">
+      <div col-4 (click)="openLocationPage()">
+        <div class="service-div">
+          <img class="service-img" src="assets/imgs/tyre_change.png">
+          <div style="padding-right: 5pt" class="text-yellow bold-font font-italic medium-text">Tyre Change</div>
+        </div>
+      </div>
+      <div col-4 (click)="openLocationPage()">
+        <div class="service-div">
+        <img class="service-img" src="assets/imgs/breakdown.png">
+        <div style="margin-right: -8px" class="text-yellow bold-font font-italic medium-text">Breakdown Recovery</div>
+        </div>
+      </div>
+      <div col-4 (click)="openLocationPage()">
+        <div class="service-div">
+        <img class="service-img" src="assets/imgs/scrap_vehicle.png">
+        <div class="text-yellow bold-font font-italic medium-text">Scrap Vehicle</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" margin-top>
+      <div col-4 (click)="openLocationPage()">
+        <div class="service-div">
+          <img class="service-img" src="assets/imgs/battery_start.png">
+          <div class="text-yellow bold-font font-italic medium-text" margin-right>Battery Start</div>
+        </div>
+      </div>
+      <div col-4 (click)="openLocationPage()">
+        <div class="service-div">
+          <img class="service-img" src="assets/imgs/vehicle_delivery.png">
+          <div class="text-yellow bold-font font-italic medium-text">Vehicle Delivery</div>
+        </div>
+      </div>
+      <div col-4 (click)="openLocationPage()">
+        <div class="service-div">
+          <img class="service-img" src="assets/imgs/machenic.png">
+          <div class="text-yellow bold-font font-italic medium-text">Mobile Machanic</div>
+        </div>
+      </div>
+    </div>
+
+    <div margin-top class="small-text text-white left-padding">Recommended Services</div>
+    <div class="row" margin-top>
+      <div col-6>
+        <img class="recom-img" src="assets/imgs/recom2.png">
+        <div class="recom-text text-white small-text">
+          <div>Tyre Changing</div>
+          <div margin-top>@ Rs199</div>
+        </div>
+      </div>
+      <div col-6>
+        <img class="recom-img" src="assets/imgs/recom1.png">
+        <div class="recom-text text-white small-text">
+          <div>Tyre Changing</div>
+          <div margin-top>@ Rs199</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

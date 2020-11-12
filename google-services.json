@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "371839818852",
+    "firebase_url": "https://towride.firebaseio.com",
+    "project_id": "towride",
+    "storage_bucket": "towride.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371839818852:android:6c1b4f33b687490d1d5371",
+        "android_client_info": {
+          "package_name": "com.alpha.towride"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371839818852-5bfklu0flp12jhvqcuduk72hmnj81mit.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alpha.towride",
+            "certificate_hash": "a1f9951b586b46b3fefcd78bdb67531f151e2c5f"
+          }
+        },
+        {
+          "client_id": "371839818852-oo32rut67gc3g2n69n9n9n9p2bmpdrtn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY8mI1ru8mvtNuR-0ah5Hn1xe0E3gFcm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371839818852-oo32rut67gc3g2n69n9n9n9p2bmpdrtn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "371839818852-mmcj0sv9b3s31th0cpldqb6dlqcc6k6g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.alpha.towride"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons no-margin left>
+      <button class="text-black" padding-left no-margin ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center>Chat List</ion-title>
+    <ion-buttons end>
+      <button (click)="openNotif()" class="text-black" padding ion-button icon-only>
+        <ion-icon name="ios-notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons >
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="montserrat-font">
+  <div>
+    <ion-item (click)="openChat()" margin-top no-lines>
+      <div item-left class="round" style="background: #63B258">J</div>
+      <div>
+        <div class="medium-text">John Doe<span class="right-align small-text">6 minutes ago</span></div>
+        <div class="text-grey top-margin font-italic small-text">Bro, i call u tomorrow</div>
+      </div>
+    </ion-item>
+
+    <ion-item (click)="openChat()" margin-top no-lines>
+      <div item-left class="round" style="background: #DE5475">E</div>
+      <div>
+        <div class="medium-text">Eyra Din<span class="right-align small-text">12 minutes ago</span></div>
+        <div class="text-grey top-margin font-italic small-text">Attactment</div>
+      </div>
+    </ion-item>
+
+    <ion-item (click)="openChat()" margin-top no-lines>
+      <div item-left class="round" style="background: #890C26">R</div>
+      <div>
+        <div class="medium-text">Ron John<span class="right-align small-text">18 minutes ago</span></div>
+        <div class="text-grey top-margin font-italic small-text">Good Night....</div>
+      </div>
+    </ion-item>
+
+    <ion-item (click)="openChat()" margin-top no-lines>
+      <div item-left class="round" style="background: #63B258">J</div>
+      <div>
+        <div class="medium-text">John Doe<span class="right-align small-text">6 minutes ago</span></div>
+        <div class="text-grey top-margin font-italic small-text">Bro, i call u tomorrow</div>
+      </div>
+    </ion-item>
+
+    <ion-item (click)="openChat()" margin-top no-lines>
+      <div item-left class="round" style="background: #DE5475">E</div>
+      <div>
+        <div class="medium-text">Eyra Din<span class="right-align small-text">12 minutes ago</span></div>
+        <div class="text-grey top-margin font-italic small-text">Attactment</div>
+      </div>
+    </ion-item>
+
+    <ion-item (click)="openChat()" margin-top no-lines>
+      <div item-left class="round" style="background: #890C26">R</div>
+      <div>
+        <div class="medium-text">Ron John<span class="right-align small-text">18 minutes ago</span></div>
+        <div class="text-grey top-margin font-italic small-text">Good Night....</div>
+      </div>
+    </ion-item>
+  </div>
+</ion-content>

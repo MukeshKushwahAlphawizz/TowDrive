@@ -1,0 +1,49 @@
+<div *ngIf="!isRequestSent" text-left><ion-icon (click)="back()" class="back-arrow" name="ios-arrow-round-back"></ion-icon></div>
+<ion-content>
+  <div #mapElement id="mapElement" [ngStyle]="{'height':isRequestSent?'50%':'70%'}" style="width: 100%;"></div>
+  <div *ngIf="!isRequestSent" class="main-div">
+    <div class="saperator-grey"></div>
+    <div class="medium-text montserrat-font bold-font" padding>Select Location</div>
+    <div class="saperator-grey"></div>
+    <div padding-top padding-left padding-right>
+      <div class="text-grey small-text">Current Location</div>
+      <ion-item no-padding no-lines>
+        <ion-icon item-left class="text-grey pin-icon" name="pin"></ion-icon>
+        <div item-start class="medium-text bold-font">Park Slope</div>
+        <div (click)="change()" item-right class="small-text" style="color: red" >Change</div>
+      </ion-item>
+    </div>
+    <div class="saperator-grey"></div>
+    <div padding class="text-grey small-text">Complete Address (optional)</div>
+    <div class="saperator-grey"></div>
+  </div>
+
+  <div *ngIf="isRequestSent" class="main-div">
+    <div class="saperator-grey"></div>
+    <div class="medium-text montserrat-font bold-font" padding>Your Location <span class="small-text right-align chat-bg">Chat</span></div>
+    <div class="saperator-grey"></div>
+    <div padding-top padding-left padding-right>
+      <div class="text-grey small-text">Start</div>
+      <ion-item no-padding no-lines>
+        <ion-icon item-left class="text-grey pin-icon" name="pin"></ion-icon>
+        <div item-start class="medium-text bold-font">Park Slope</div>
+      </ion-item>
+    </div>
+    <div class="saperator-grey"></div>
+    <div padding-top padding-left padding-right>
+      <div class="text-grey small-text">End</div>
+      <ion-item no-padding no-lines>
+        <ion-icon item-left class="text-grey pin-icon" name="pin"></ion-icon>
+        <div item-start class="medium-text bold-font">Park Slope</div>
+      </ion-item>
+    </div>
+    <div class="saperator-grey"></div>
+    <div padding class="medium-text bold-font">Driver Name <span class="right-align nobold-font">Name Here</span></div>
+    <div class="saperator-grey"></div>
+    <div padding class="medium-text bold-font">Sep-15-2020 <span class="right-align nobold-font">12:40 PM</span></div>
+    <div class="saperator-grey"></div>
+  </div>
+</ion-content>
+<ion-footer>
+  <button (click)="set()" class="footer-btn" full ion-button>{{isRequestSent?'Cancel':'Set Location'}}</button>
+</ion-footer>

@@ -1,0 +1,37 @@
+<ion-content class="set-bg montserrat-font" text-center>
+  <div text-left><ion-icon (click)="back()" class="back-arrow" name="ios-arrow-round-back"></ion-icon></div>
+  <div text-left class="main-div">
+    <h3 class="text-white">Vehicle Details</h3>
+    <div margin-top text-wrap class="rubik-font smaller-text text-grey">Lorem Ipsum is simply dummy text of the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</div>
+
+    <div class="input-box small-text text-white" margin-top>
+      <label for="registration">Vehicle Registration</label>
+      <label class="right-align image-name" for="registration"><span>{{this.vehicleRegistraion.name}}</span><ion-icon *ngIf="!this.vehicleRegistraion.name" class="upload-icon" name="md-cloud-upload"></ion-icon></label>
+      <input name="registration" id="registration" class="fileInput" type="file" (change)="vehicleRegistraionEvent($event)"/>
+    </div>
+
+    <div class="input-box small-text text-white" margin-top>
+      <label for="drivingLicence">Driving Licence</label>
+      <label class="right-align image-name" for="drivingLicence"><span>{{this.drivingLicence.name}}</span><ion-icon *ngIf="!this.drivingLicence.name" class="upload-icon" name="md-cloud-upload"></ion-icon></label>
+      <input name="drivingLicence" id="drivingLicence" class="fileInput" type="file" (change)="drivingLicenceEvent($event)"/>
+    </div>
+
+    <div class="input-box small-text text-white" margin-top>
+      <label for="insuranceDoc">Insurance Document</label>
+      <label class="right-align image-name" for="insuranceDoc"><span>{{this.insuranceDoc.name}}</span><ion-icon *ngIf="!this.insuranceDoc.name" class="upload-icon" name="md-cloud-upload"></ion-icon></label>
+      <input name="insuranceDoc" id="insuranceDoc" class="fileInput" type="file" (change)="insuranceDocEvent($event)"/>
+    </div>
+
+    <div class="input-box small-text text-white" margin-top>
+      <label for="backgroundCheck">Background Checks</label>
+      <label class="right-align image-name" for="backgroundCheck"><span>{{this.backgroundCheck.name}}</span><ion-icon *ngIf="!this.backgroundCheck.name" class="upload-icon" name="md-cloud-upload"></ion-icon></label>
+      <input name="backgroundCheck" id="backgroundCheck" class="fileInput" type="file" (change)="backgroundCheckEvent($event)"/>
+    </div>
+
+    <div style="margin: 35pt 0">
+      <button (click)="save()" class="small-text" ion-button full>
+        <span>Save And Start</span><span margin-left><ion-icon class="forward-icon" name="ios-arrow-round-forward"></ion-icon></span>
+      </button>
+    </div>
+  </div>
+</ion-content>

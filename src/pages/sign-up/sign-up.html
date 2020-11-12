@@ -1,0 +1,62 @@
+<ion-content class="set-bg montserrat-font" text-center>
+  <div text-left><ion-icon (click)="back()" class="back-arrow" name="ios-arrow-round-back"></ion-icon></div>
+  <div text-left class="main-div">
+    <h2 class="text-white">Create Account</h2>
+    <div text-wrap class="smaller-text text-grey">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</div>
+    <form [formGroup]="signUpForm">
+      <ion-input formControlName="username" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Username"></ion-input>
+      <div>
+        <ng-container *ngFor="let error of error_messages.username">
+          <div class="error-message" *ngIf="signUpForm.get('username').hasError(error.type) &&
+                (signUpForm.get('username').dirty || signUpForm.get('username').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-input formControlName="mobileNumber" class="full-input input-box small-text text-white" margin-top type="number" placeholder="Mobile no."></ion-input>
+      <div>
+        <ng-container *ngFor="let error of error_messages.mobileNumber">
+          <div class="error-message"
+               *ngIf="signUpForm.get('mobileNumber').hasError(error.type) && (signUpForm.get('mobileNumber').dirty || signUpForm.get('mobileNumber').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-input formControlName="email" class="full-input input-box small-text text-white" margin-top type="email" placeholder="Email"></ion-input>
+      <div>
+        <ng-container *ngFor="let error of error_messages.email">
+          <div class="error-message" *ngIf="signUpForm.get('email').hasError(error.type) &&
+                (signUpForm.get('email').dirty || signUpForm.get('email').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-input formControlName="password" class="full-input input-box small-text text-white" margin-top type="password" placeholder="Password"></ion-input>
+      <div>
+        <ng-container *ngFor="let error of error_messages.password">
+          <div class="error-message"
+               *ngIf="signUpForm.get('password').hasError(error.type) && (signUpForm.get('password').dirty || signUpForm.get('password').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <button [disabled]="signUpForm.invalid" (click)="signUp()" class="top-margin" ion-button full>Get Started
+        <span margin-left><ion-icon class="forward-icon" name="ios-arrow-round-forward"></ion-icon></span>
+      </button>
+    </form>
+    <div class="top-margin small-text text-white" text-center>Sign In With Social</div>
+    <div class="social-div" text-center>
+      <span (click)="fbLogin()"><img class="social-img" src="assets/img/facebook.png"></span>
+      <span (click)="googleLogin()" margin-left><img class="social-img" src="assets/img/google.png"></span>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <button (click)="back()" class="footer-btn" ion-button full>
+    <span>Already Have An Account</span><span margin-left><ion-icon class="forward-icon" name="ios-arrow-round-forward"></ion-icon></span>
+  </button>
+</ion-footer>

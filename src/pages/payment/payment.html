@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons no-margin left>
+      <button padding no-margin ion-button icon-only menuToggle>
+        <ion-icon class="text-black" name="md-menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center>Payment Details</ion-title>
+    <ion-buttons end>
+      <button padding ion-button icon-only>
+        <ion-icon class="text-black" name="ios-notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-label class="txt bold-font medium-text" margin-top >Total Price</ion-label>
+  <ion-label class="bold-font price-txt" margin-top>$50</ion-label>
+  <ion-label class="txt medium-text" margin-top>Payment Method</ion-label>
+  <div class="row">
+    <div col-6 class="left-btn">
+      <button class="payment-btn txt" ion-button full>PayPal
+        <ion-icon margin-left class="bold-font" name="ios-checkmark-circle-outline"></ion-icon>
+      </button>
+    </div>
+    <div col-6 class="right-btn">
+      <button class="payment-btn txt" ion-button full>Card
+        <ion-icon margin-left class="bold-font" name="ios-checkmark-circle-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+  <ion-label class="medium-bold small-text" margin-top padding-top>Card Number</ion-label>
+  <ion-item no-padding no-lines class="box text-grey">
+    <ion-icon item-left class="card-icon" name="card"></ion-icon>
+    <input item-start no-margin type="text" placeholder="  ****   ******   ****" style="padding: 5pt" class="full-input txt small-text">
+  </ion-item>
+  <div class="row no-padding">
+    <div col-7 class="no-padding">
+      <ion-label class="medium-bold txt small-text" margin-top>Valid Until</ion-label>
+      <div class="box" margin-right>
+        <input item-start no-margin type="text" placeholder="Month/Year" padding class="full-input txt small-text">
+      </div>
+    </div>
+    <div col-5 class="no-padding">
+      <ion-label class="medium-bold txt small-text" margin-top>CVV</ion-label>
+      <div class="box">
+        <input item-start no-margin type="text" placeholder=" ***" padding class="full-input txt small-text">
+      </div>
+    </div>
+  </div>
+  <ion-label class="medium-bold txt small-text" margin-top>Card Holder Name</ion-label>
+  <div margin-bottom class="box">
+    <input item-start no-margin type="text" placeholder="Name Here" padding class="full-input txt small-text">
+  </div>
+
+</ion-content>
+<ion-footer>
+  <button (click)="payNow()" ion-button full class="footer-btn">Pay Now</button>
+</ion-footer>

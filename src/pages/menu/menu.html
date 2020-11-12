@@ -1,0 +1,61 @@
+<ion-menu [content]="content" type="overlay" (ionOpen)="menuOpen()">
+  <ion-content class="yellow-bg">
+    <ion-list class="menu-list">
+      <div margin-left margin-top>
+        <ion-item no-lines>
+          <ion-avatar item-start>
+            <img class="user-img" [src]="userData && userData.image && userData.image!==''?userData.image:'assets/img/user-default.png'">
+          </ion-avatar>
+          <h3>{{(userData && userData.first_name && userData.last_name && userData.first_name !=='' && userData.last_name !=='')?(userData.first_name + ' '+ userData.last_name):(userData && userData.username?userData.username:'Name Here')}}</h3>
+          <div text-wrap class="small-text" style="margin-top: 2px">{{userData && userData.email && userData.email !== ''?userData.email:'email@gmail.com'}}</div>
+        </ion-item>
+        <ion-item no-lines>
+          <button (click)="openEditProfile()" menuClose class="edit-profile-btn" item-right
+                  ion-button round>EDIT PROFILE</button>
+        </ion-item>
+      </div>
+
+      <ion-item (click)="openPage(isDriver?'DriverHomePage':'HomePage')" menuClose margin-top no-lines>
+        <ion-icon class="left-option-icon" item-left name="ios-home"></ion-icon>
+        <h3>Home</h3>
+      </ion-item>
+
+      <ion-item (click)="openPage('MyHistoryPage')" menuClose margin-top no-lines>
+        <!--<ion-icon class="left-option-icon" item-left name="timer"></ion-icon>-->
+        <img class="left-img" item-left src="assets/img/history.png">
+        <h3>My History</h3>
+      </ion-item>
+
+      <ion-item (click)="openPage('ChatListPage')" menuClose margin-top no-lines>
+        <ion-icon class="left-option-icon" item-left name="ios-chatboxes"></ion-icon>
+        <h3>Chatlist</h3>
+      </ion-item>
+
+      <ion-item (click)="shareApp()" menuClose margin-top no-lines>
+        <ion-icon class="left-option-icon" item-left name="md-share"></ion-icon>
+        <h3>Share App</h3>
+      </ion-item>
+
+      <ion-item (click)="openPage('FeedbackPage')" menuClose margin-top no-lines>
+        <ion-icon class="left-option-icon" item-left name="md-paper"></ion-icon>
+        <h3>Feedback</h3>
+      </ion-item>
+
+      <ion-item (click)="openPage('SettingPage')" menuClose margin-top no-lines>
+        <ion-icon class="left-option-icon" item-left name="settings"></ion-icon>
+        <h3>Settings</h3>
+      </ion-item>
+
+      <ion-item (click)="openPage('HelpPage')" menuClose margin-top no-lines>
+        <ion-icon class="left-option-icon" item-left name="md-help"></ion-icon>
+        <h3>Help</h3>
+      </ion-item>
+
+      <ion-item (click)="exit()" menuClose margin-top no-lines>
+        <ion-icon class="left-option-icon" item-left name="exit"></ion-icon>
+        <h3>Exit</h3>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav #content [root]="rootPage"></ion-nav>

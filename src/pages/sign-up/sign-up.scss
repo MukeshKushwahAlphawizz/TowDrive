@@ -1,0 +1,33 @@
+page-sign-up {
+  .set-bg{
+    background: url("../assets/img/bg.png");
+    background-size: 100% 100%;
+    background-position: center;
+  }
+
+  .back-arrow{
+    font-size: 3.5rem;
+    color: white;
+    padding: 15pt 20pt 5pt 20pt;
+  }
+
+  .main-div{
+    margin: 5pt 35pt;
+  }
+
+  .top-margin{
+    margin-top: 25pt;
+  }
+  .forward-icon{
+    font-size: 2.5rem!important;
+  }
+  .social-div{
+    margin: 20pt;
+  }
+  .social-img{
+    width: 30%;
+  }
+  .text-input {
+    margin: 0 !important;
+  }
+}

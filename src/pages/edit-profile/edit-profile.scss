@@ -1,0 +1,23 @@
+page-edit-profile {
+  .set-bg{
+    background: url("../assets/img/bg.png");
+    background-size: 100% 100%;
+  }
+  .top{
+    margin-top: 15%;
+  }
+  .edit{
+    position: absolute;
+    width: 22pt;
+    margin: 45pt auto auto 55pt;
+  }
+  .user-img{
+    width: 70pt;
+    border-radius: 50%;
+    height: 70pt;
+    object-fit: cover;
+  }
+  .input-form{
+    margin: 30pt;
+  }
+}

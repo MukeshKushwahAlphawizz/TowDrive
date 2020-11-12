@@ -1,0 +1,30 @@
+page-track-location {
+  .box{
+    border: 1px solid grey !important;
+    background: transparent;
+    padding: 8pt;
+  }
+  .green-dot{
+    background: green;
+  }
+  .red-dot{
+    background: red;
+  }
+  .dot{
+    height: 8px;width: 8px;border-radius: 50%;
+    margin-top: 3pt;
+  }
+  .chat{
+    background: green;
+    color: white;
+    padding: 15pt 0;
+  }
+  .end{
+    background: #F7DB3A;
+    color: white;
+    padding: 15pt 0;
+  }
+  .location-div{
+    height: 25%;margin: 25pt 25pt 10pt 25pt;
+  }
+}

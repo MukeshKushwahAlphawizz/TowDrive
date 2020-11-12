@@ -1,0 +1,27 @@
+<ion-content class="set-bg montserrat-font" text-center>
+  <div text-left><ion-icon (click)="back()" class="back-arrow" name="ios-arrow-round-back"></ion-icon></div>
+  <div text-left class="main-div">
+    <h3 class="text-white">Your Personal Details</h3>
+    <div text-wrap class="rubik-font smaller-text text-grey">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</div>
+    <input [(ngModel)]="firstName" class="full-input input-box small-text text-white" margin-top type="text" placeholder="First Name">
+    <input [(ngModel)]="lastName" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Last Name">
+    <input [(ngModel)]="requestData.mobile" class="full-input input-box small-text text-white" margin-top type="number" placeholder="Mobile No">
+    <input [(ngModel)]="requestData.email" class="full-input input-box small-text text-white" margin-top type="email" placeholder="Email Address">
+    <input [(ngModel)]="address" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Full Address">
+
+    <ion-item margin-top style="min-height: 1rem" class="input-box" no-lines no-padding>
+      <ion-datetime [(ngModel)]="dob" no-padding placeholder="DOB" class="full-input select-date small-text text-white" displayFormat="DD-MMM-YYYY"></ion-datetime>
+      <ion-icon class="text-white calender" item-right name="calendar"></ion-icon>
+    </ion-item>
+
+    <ion-item (click)="openPicker()" style="width: 60%; min-height: 1rem" margin-top no-lines class="medium-text">
+      <div class="small-text">{{imageName}}</div>
+      <div item-right><ion-icon name="md-download"></ion-icon></div>
+    </ion-item>
+  </div>
+</ion-content>
+<ion-footer>
+  <button (click)="next()" class="footer-btn" ion-button full>
+    <span>Next</span><span margin-left><ion-icon class="forward-icon" name="ios-arrow-round-forward"></ion-icon></span>
+  </button>
+</ion-footer>

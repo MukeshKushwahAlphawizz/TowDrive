@@ -1,0 +1,42 @@
+<ion-content class="set-bg montserrat-font" text-center>
+  <img class="top-img" src="assets/img/truck-icon.png">
+  <div text-left class="main-div">
+    <h2 class="title text-white">{{userType}} Log In Now</h2>
+    <form [formGroup]="loginForm">
+      <input formControlName="email" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Username/Mobile no.">
+      <div>
+        <ng-container *ngFor="let error of error_messages.email">
+          <div class="error-message" *ngIf="loginForm.get('email').hasError(error.type) &&
+                (loginForm.get('email').dirty || loginForm.get('email').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <input formControlName="password" class="full-input input-box small-text text-white" margin-top type="password" placeholder="Password">
+      <div>
+        <ng-container *ngFor="let error of error_messages.password">
+          <div class="error-message"
+               *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+            {{ error.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <div margin-top text-right><span (click)="openForgotPass()" class="small-text text-white">Forgot Password ?</span></div>
+      <button [disabled]="loginForm.invalid" (click)="signIn()" class="top-margin" ion-button full>Get Started
+        <span margin-left><ion-icon class="forward-icon" name="ios-arrow-round-forward"></ion-icon></span>
+      </button>
+    </form>
+    <div class="signin-div small-text text-white" text-center>Sign In With Social</div>
+    <div class="top-margin" text-center>
+      <span><img (click)="fbLogin()" class="social-img" src="assets/img/facebook.png"></span>
+      <span margin-left><img (click)="googleLogin()" class="social-img" src="assets/img/google.png"></span>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <button (click)="create()" class="footer-btn" ion-button full>
+    <span>Create An Account</span><span margin-left><ion-icon class="forward-icon" name="ios-arrow-round-forward"></ion-icon></span>
+  </button>
+</ion-footer>

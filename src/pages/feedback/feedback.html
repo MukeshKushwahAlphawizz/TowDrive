@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons no-margin left>
+      <button class="text-black" padding-left no-margin ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center>Feedback</ion-title>
+    <ion-buttons end>
+      <button (click)="openNotif()" class="text-black" padding ion-button icon-only>
+        <ion-icon name="ios-notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons >
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div padding class="light-dark">
+    <h3 class="bold-font" text-center>How Much You Like Service?</h3>
+    <div padding-top>
+      <div class="item-feedback">
+        <ion-label><span class="left-item smaller-text">Service Name</span><span item-right class="right-item small-text">Tyre Change</span></ion-label>
+      </div>
+      <div margin-top class="item-feedback">
+        <ion-label><span class="left-item smaller-text">Service Status</span><span item-right class="right-item small-text">Done</span></ion-label>
+      </div>
+      <div margin-top class="item-feedback">
+        <ion-label><span class="left-item smaller-text">Payment Mode</span><span item-right class="right-item small-text">Online</span></ion-label>
+      </div>
+      <div margin-top class="item-feedback">
+        <ion-label><span class="left-item smaller-text">Approx Cost</span><span item-right class="right-item small-text" style="padding: 0 18pt;">$56</span></ion-label>
+      </div>
+    </div>
+    <h5 style="margin-top: 30pt" class="bold-font">Provide Ratings</h5>
+    <div margin-top padding-top class="medium-text">Timings
+      <span class="right-align">
+        <ionic3-star-rating activeIcon = "ios-star"
+                            defaultIcon = "ios-star-outline"
+                            activeColor = "#F5C700"
+                            defaultColor = "#A3A3A3"
+                            readonly="false"
+                            rating="3"
+                            fontSize = "32px">
+          </ionic3-star-rating>
+      </span>
+    </div>
+
+    <div class="medium-text" margin-top>Service Provider
+      <span class="right-align">
+        <ionic3-star-rating activeIcon = "ios-star"
+                            defaultIcon = "ios-star-outline"
+                            activeColor = "#F5C700"
+                            defaultColor = "#A3A3A3"
+                            readonly="false"
+                            rating="4"
+                            fontSize = "32px">
+          </ionic3-star-rating>
+      </span>
+    </div>
+
+    <div class="medium-text" margin-top>Work Quality
+      <span class="right-align">
+        <ionic3-star-rating activeIcon = "ios-star"
+                            defaultIcon = "ios-star-outline"
+                            activeColor = "#F5C700"
+                            defaultColor = "#A3A3A3"
+                            readonly="false"
+                            rating="4"
+                            fontSize = "32px">
+          </ionic3-star-rating>
+      </span>
+    </div>
+    <input class="full-input input-box1 small-text" type="text" placeholder="Write Something">
+  </div>
+</ion-content>
+<ion-footer>
+  <button (click)="provideFeedback()" class="footer-btn" ion-button full>Provide Feedback</button>
+</ion-footer>

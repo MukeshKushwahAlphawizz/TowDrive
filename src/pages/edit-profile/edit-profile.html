@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons left>
+      <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center>Edit Profile</ion-title>
+    <ion-buttons end>
+      <button padding ion-button icon-only (click)="openNotification()">
+        <ion-icon class="text-black" name="ios-notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="set-bg">
+  <div class="top" text-center>
+    <img (click)="openPicker()" class="edit" src="assets/img/edit.png">
+    <img (click)="openPicker()" class="user-img" [src]="profileImgToShow!==''?profileImgToShow:'assets/img/user-default.png'">
+  </div>
+  <div class="input-form">
+    <input [(ngModel)]="firstName" class="full-input input-box small-text text-white" margin-top type="text" placeholder="First Name">
+    <input [(ngModel)]="lastName" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Last Name">
+    <input [(ngModel)]="email" class="full-input input-box small-text text-white" margin-top type="email" placeholder="Email">
+    <input [(ngModel)]="mobileNumber" readonly class="full-input input-box small-text text-white" margin-top type="number" placeholder="Mobile No.">
+    <textarea [(ngModel)]="address" class="full-input input-box small-text text-white" margin-top rows="4" placeholder="Address"></textarea>
+    <button (click)="save()" margin-top ion-button full>Save</button>
+  </div>
+</ion-content>

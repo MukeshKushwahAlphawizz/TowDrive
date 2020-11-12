@@ -1,0 +1,38 @@
+<ion-content class="set-bg montserrat-font" text-center>
+  <img class="top-img" src="assets/img/truck-icon.png">
+  <h1 class="title text-white">Welcome Back!!</h1>
+  <!--<div class="row option-div" text-center>
+    <span (click)="selectDriver()" class="box" [ngClass]="isDriver?'yellow-bg':'box-light'">
+        <img class="option-icon" src="assets/img/handle.png">
+        <div class="top-margin bold-font medium-text">Driver</div>
+    </span>
+    <span (click)="selectRider()" margin-left class="box" [ngClass]="isRider?'yellow-bg':'box-light'">
+        <img class="option-icon" src="assets/img/user.png">
+        <div class="top-margin bold-font medium-text">Rider</div>
+    </span>
+  </div>-->
+  <div>
+    <ion-slides class="option-div" text-center slidesPerView="2.15">
+      <ion-slide class="box" (click)="selectDriver()" [ngClass]="isDriver?'yellow-bg':'box-light'">
+        <span>
+            <img class="option-icon" src="assets/img/handle.png">
+            <div class="top-margin bold-font medium-text">Driver</div>
+        </span>
+      </ion-slide>
+      <ion-slide (click)="selectRider()" margin-left class="box" [ngClass]="isRider?'yellow-bg':'box-light'">
+        <span>
+          <img class="option-icon" src="assets/img/user.png">
+          <div class="top-margin bold-font medium-text">Rider</div>
+        </span>
+      </ion-slide>
+    </ion-slides>
+
+  </div>
+
+
+</ion-content>
+<ion-footer>
+  <button (click)="next()" class="footer-btn" ion-button full>
+    <span>Next</span><span margin-left><ion-icon class="forward-icon" name="ios-arrow-round-forward"></ion-icon></span>
+  </button>
+</ion-footer>

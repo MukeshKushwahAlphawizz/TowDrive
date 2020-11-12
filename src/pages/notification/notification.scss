@@ -1,0 +1,43 @@
+page-notification {
+  .top_title {
+    font-weight: bold;
+    font-style: oblique;
+    margin-left: 20pt;
+  }
+
+  .notification_icon {
+    height: 43pt;
+    width: 43pt;
+    border-radius: 50%;
+    padding: 8pt 12pt;
+    font-size: 3.8rem !important;
+    color: black;
+    background: #dedede99;
+    margin: 5pt !important;
+  }
+  .content-div{
+    margin: 8pt 0 8pt 5pt;
+  }
+
+  .paragraph_details {
+    font-size: 12px;
+  }
+
+  .live_tracking {
+    padding: 5pt 10pt !important;
+    margin: 0!important;
+    font-size: 0.8rem !important;
+    height: auto !important;
+    color: white;
+  }
+  .chat-driver-btn{
+    background: #303030;
+  }
+  .live-tracking-btn{
+    background: #FDDB3A;
+    margin-left: 5pt !important;
+  }
+  .label{
+    margin: 8pt;
+  }
+}

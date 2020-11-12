@@ -1,0 +1,68 @@
+.yellow-bg{background: #FDDB3A;}
+.light-bg{background: #F6F4E6;}
+.text-yellow {color: #FDDB3A;}
+.text-grey {color: #999;}
+.text-darkgrey {color: #515151;}
+.text-black{color: black}
+.text-dark{color: #252525}
+.text-white {color: white;}
+.smallest-text{font-size: 0.8rem;}
+.smaller-text{font-size: 1rem;}
+.small-text{font-size: 1.2rem;}
+.small1-text{font-size: 1.1rem;}
+.medium-text{font-size: 1.4rem;}
+.big-text{font-size: 1.7rem;}
+.bigger-text{font-size: 2rem;}
+.nobold-font{font-weight: normal}
+.bold-font{font-weight: bold}
+.medium-bold{font-weight: 500}
+.montserrat-font{font-family: Montserrat}
+.rubik-font{font-family: Rubik}
+.underline{text-decoration-line: underline;}
+.font-italic{font-style: italic;}
+.right-align{float: right;}
+.error-message {
+  color: red;
+  text-align: left;
+  margin-left: 5pt;
+  margin-top: 5pt;
+  font-size: 12px;
+}
+.full-input {
+  border: none;
+  width: 100%;
+}
+button{
+  text-transform: none !important;
+}
+.saperator{
+  width: 100%;
+  height: 1px;
+  background: #999;
+}
+.saperator-grey{
+  width: 100%;
+  height: 1px;
+  background: #dedede;
+}
+.input-box{
+  border: 1px solid #ffffff80 !important;
+  background: transparent;
+  padding: 8pt;
+}
+.footer-btn{
+  margin:0;
+  padding: 20pt;
+  color: #41444B;
+  opacity: 1;
+  letter-spacing: 1.4px;
+}
+.toolbar-background {
+  background-color: #FDDB3A;
+  color: black;
+}
+.toolbar-title {color: black;font-size: 1.5rem;font-weight: 400}
+::placeholder {color: white;opacity: 1;}
+:-ms-input-placeholder {color: white}
+::-ms-input-placeholder {color: white}
+.back-button-text-ios, .back-button-icon-ios {color: black;}

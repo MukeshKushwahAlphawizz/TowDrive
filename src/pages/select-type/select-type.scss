@@ -1,0 +1,49 @@
+page-select-type {
+  .set-bg{
+    background: url("../assets/img/bg-select.png");
+    background-size: 100% 100%;
+    background-position: center;
+  }
+  .top-img{
+    margin-top: 20%;
+    width: 50%;
+  }
+  .title{
+    margin-top: 20%;
+  }
+  .option-icon{
+    width: 60%;
+  }
+  /*.option-div{
+    margin: 30pt 20% 30pt 20%;
+  }
+  .box{
+    height: 75pt;
+    width: 75pt;
+    padding: 15pt;
+    border-radius: 10px;
+  }*/
+  .option-div{
+    padding: 40pt;
+  }
+  .box{
+    padding: 15pt;
+    border-radius: 10px;
+  }
+  .box-light{
+    background: #F6F4E6;
+  }
+
+  .top-margin{
+    margin-top: 5pt;
+  }
+  .bottom-btn{
+    bottom: 0;
+    position: absolute;
+    font-size: 1.4rem;
+    padding: 16pt;
+  }
+  .forward-icon{
+    font-size: 2.5rem!important;
+  }
+}

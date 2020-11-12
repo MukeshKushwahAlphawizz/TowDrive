@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>Home</ion-title>
+    <ion-buttons end>
+      <button (click)="openNotif()" class="text-black" padding ion-button icon-only>
+        <ion-icon name="ios-notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons >
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div #mapElement id="mapElement" style="width: 100%;height: 70%"></div>
+
+  <div class="location-div">
+    <div class="box small-text" margin-top>
+      <span>78, Vijay Nagar</span>
+      <span class="right-align"><div class="dot green-dot"></div></span>
+    </div>
+    <div class="box small-text" margin-top>
+      <span>7 Noorani Nagar</span>
+      <span class="right-align"><div class="dot red-dot"></div></span>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <div text-center class="row medium-text">
+    <div (click)="openChat()" col-6 class="chat">Chat<ion-icon style="margin-left: 8pt;font-size: 2rem" name="ios-chatboxes"></ion-icon></div>
+    <div col-6 class="end">End</div>
+  </div>
+</ion-footer>

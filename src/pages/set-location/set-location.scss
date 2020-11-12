@@ -1,0 +1,26 @@
+page-set-location {
+  .back-arrow{
+    position: absolute;
+    z-index: 9999;
+    font-size: 3.5rem;
+    color: black;
+    font-weight: bold;
+    padding: 10pt 20pt 5pt 20pt;
+  }
+  .main-div {
+    width: 100%;
+  }
+  .top-padding{
+    padding-top: 5pt;
+  }
+  .pin-icon{
+    font-size: 2rem;
+    margin: 0 !important;
+    margin-top: 5pt !important;
+    margin-left: -4pt!important;
+  }
+  .chat-bg{
+    background: #F7DB3A;
+    padding: 3pt 12pt;
+  }
+}

@@ -1,0 +1,36 @@
+page-home {
+  .small-padding{
+    padding: 8pt;
+  }
+  .padding-20{
+    padding: 20pt;
+  }
+  .set-bg{
+    background: url("../assets/img/bg.png");
+    background-size: 100% 100%;
+  }
+  .service-div{
+    background: #6d6d6d85;
+    padding: 10pt;
+  }
+  .service-img{
+    width: auto;
+    height: 25pt;
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+    object-fit: contain;
+  }
+  .recom-text{
+    margin-top: -40pt;
+    margin-left: 10pt;
+  }
+  .left-padding{
+    padding-left: 5px;
+  }
+  .recom-img{
+    height: 120px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+}

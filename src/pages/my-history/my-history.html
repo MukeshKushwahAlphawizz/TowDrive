@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons no-margin left>
+      <button class="text-black" padding-left no-margin ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center>My History</ion-title>
+    <ion-buttons end>
+      <button padding ion-button icon-only (click)="openNotification()">
+        <ion-icon class="text-black" name="ios-notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="set-bg">
+  <div>
+    <ion-item margin-top no-lines class="grey-div">
+      <div item-left class="round" style="background: #890C26">R</div>
+      <div item-start>
+        <div class="text-white smaller-text">Service Name : Tyre Change</div>
+        <div class="text-white middle smaller-text">Name : John Doe</div>
+        <div class="text-white smaller-text">Address : 405 Street, Madcane</div>
+      </div>
+      <div item-right text-center>
+        <div class="price text-yellow">$100</div>
+        <div class="text-white small-text top-margin">Card Payment</div>
+      </div>
+    </ion-item>
+
+    <ion-item margin-top no-lines class="grey-div">
+      <div item-left class="round" style="background: #54CFB0">R</div>
+      <div item-start>
+        <div class="text-white smaller-text">Service Name : Tyre Change</div>
+        <div class="text-white middle smaller-text">Name : John Doe</div>
+        <div class="text-white smaller-text">Address : 405 Street, Madcane</div>
+      </div>
+      <div item-right text-center>
+        <div class="price text-yellow">$100</div>
+        <div class="text-white small-text top-margin">Card Payment</div>
+      </div>
+    </ion-item>
+
+    <ion-item margin-top no-lines class="grey-div">
+      <div item-left class="round" style="background: #F7DB3A">R</div>
+      <div item-start>
+        <div class="text-white smaller-text">Service Name : Tyre Change</div>
+        <div class="text-white middle smaller-text">Name : John Doe</div>
+        <div class="text-white smaller-text">Address : 405 Street, Madcane</div>
+      </div>
+      <div item-right text-center>
+        <div class="price text-yellow">$100</div>
+        <div class="text-white small-text top-margin">Card Payment</div>
+      </div>
+    </ion-item>
+  </div>
+</ion-content>

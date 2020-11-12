@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-navbar>
+    <!--<ion-buttons no-margin left>
+      <button class="text-black" padding-left no-margin ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>-->
+    <ion-title text-center>Notifications</ion-title>
+    <ion-buttons end>
+      <button padding ion-button icon-only>
+        <ion-icon class="text-black" name="ios-notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher class="pull-refresh" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="isListEmpty" style="margin: 50pt" text-center class="bold-font">No Notifications are available</div>
+
+  <div margin-top *ngIf="!isListEmpty">
+    <ion-item class="small-text" no-lines style="min-height: 1rem" text-center>
+      <div class="top_title">Today</div>
+      <div (click)="clearAll(true,false)" item-right>Clear All</div>
+    </ion-item>
+    <div>
+      <div *ngIf="true">
+        <ion-item no-lines>
+          <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
+          <div class="content-div">
+            <div text-wrap class="small-text">Lorem Ispum Dollar has a dummy Text. Lorem Ispum Dollar has a dummy Text.</div>
+          </div>
+        </ion-item>
+        <ion-item no-lines no-margin>
+          <button (click)="chatDriver()" no-margin item-right class="live_tracking chat-driver-btn" round
+                  ion-button>CHAT WITH DRIVER</button>
+          <button (click)="liveTracking()" no-margin item-right class="live_tracking live-tracking-btn" round
+                  ion-button>START LIVE TRACKING</button>
+        </ion-item>
+      </div>
+    </div>
+
+    <ion-item no-lines>
+      <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
+      <div class="content-div">
+        <div text-wrap class="small-text">Lorem Ispum Dollar has a dummy Text. Lorem Ispum Dollar has a dummy Text.</div>
+      </div>
+    </ion-item>
+
+    <ion-item no-lines>
+      <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
+      <div class="content-div">
+        <div text-wrap class="small-text">Lorem Ispum Dollar has a dummy Text. Lorem Ispum Dollar has a dummy Text.</div>
+      </div>
+    </ion-item>
+
+    <ion-item margin-top class="small-text" no-lines style="min-height: 1rem" text-center>
+      <div class="top_title">Yesterday</div>
+      <div (click)="clearAll(false,false)" item-right>Clear</div>
+    </ion-item>
+    <div>
+      <div>
+        <ion-item no-lines>
+          <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
+          <div class="content-div">
+            <div text-wrap class="small-text">Lorem Ispum Dollar has a dummy Text. Lorem Ispum Dollar has a dummy Text.</div>
+          </div>
+        </ion-item>
+      </div>
+    </div>
+
+    <!--<ion-item *ngIf="isPast" margin-top class="small-text" no-lines style="min-height: 1rem" text-center>
+      <div class="top_title">Past</div>
+      <div (click)="clearAll(true,true)" item-right>Clear All</div>
+    </ion-item>
+    <div *ngFor="let item of notificationList">
+      <div *ngIf="item.isOld">
+        <ion-item no-lines no-padding>
+          <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
+          <div class="content-div">
+            <p text-wrap class="small-text bold-font">
+              {{item.message}}
+            </p>
+            <p *ngIf="item.route_details !==''" class="paragraph_details" text-wrap>({{item.route_details[0].from_destination}} - {{item.route_details[0].to_destination}})</p>
+          </div>
+        </ion-item>
+      </div>
+    </div>-->
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+</ion-content>
+<ion-footer>
+  <button (click)="refresh()" class="footer-btn" ion-button full>Refresh</button>
+</ion-footer>

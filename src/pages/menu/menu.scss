@@ -1,0 +1,40 @@
+page-menu {
+  .menu-list{
+    ion-item{
+      background: #FDDB3A !important;
+    }
+  }
+  .big-size{
+    font-size: 2.5rem;
+  }
+  .user-img{
+    width: 44pt !important;
+    height: 44pt !important;
+    object-fit: cover;
+  }
+  .edit-profile-btn{
+    border: 1px solid black;
+    font-size: 1rem!important;
+    padding: 5pt 13pt !important;
+  }
+  .left-option-icon{
+    color: black;
+    border: 1px solid black;
+    padding: 9pt;
+    border-radius: 50%;
+    width: 40pt;
+    height: 40pt;
+    margin: 5pt 15pt !important;
+  }
+  .left-img{
+    border-radius: 50%;
+    width: 40pt;
+    height: 40pt;
+    margin: 5pt 15pt !important;
+    border: 1px solid black;
+  }
+
+  .item-md ion-icon[item-left] + .item-inner, .item-md ion-icon[item-left] + .item-input, .item-md ion-icon[item-start] + .item-inner, .item-md ion-icon[item-start] + .item-input{
+    margin-left: 0px !important;
+  }
+}

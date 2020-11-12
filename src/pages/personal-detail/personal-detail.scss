@@ -1,0 +1,34 @@
+page-personal-detail {
+  .set-bg{
+    background: url("../assets/img/bg.png");
+    background-size: 100% 100%;
+    background-position: center;
+  }
+
+  .back-arrow{
+    font-size: 3.5rem;
+    color: white;
+    padding: 15pt 20pt 5pt 20pt;
+  }
+
+  .main-div{
+    margin: 5pt 35pt 45pt 35pt;
+  }
+
+  .top-margin{
+    margin-top: 25pt;
+    margin-bottom: 20pt;
+  }
+
+  .select-date{
+    padding: 8pt;
+    width: 100%;
+  }
+  .calender{
+    font-size: 2.2rem;
+    margin: 5pt 0 0 0 !important;
+  }
+  .forward-icon{
+    font-size: 2.5rem!important;
+  }
+}

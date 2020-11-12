@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons no-margin left>
+      <button class="text-black" padding-left no-margin ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center>Settings</ion-title>
+    <ion-buttons end>
+      <button padding ion-button icon-only (click)="openNotification()">
+        <ion-icon class="text-black" name="ios-notifications-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div margin-top>
+    <div class="big-text" style="margin-top: 0px" padding-left padding-right>Main Preferences</div>
+    <ion-item no-lines>
+      <ion-label item-left class="medium-text label-select">Language</ion-label>
+      <ion-select item-right [(ngModel)]="language" (ionChange)="selectLanguage()" class="medium-text select-lang">
+        <ion-option value="en">English</ion-option>
+        <ion-option value="ot">Other</ion-option>
+      </ion-select>
+    </ion-item>
+    <div class="saperator"></div>
+
+    <ion-item margin-top no-lines>
+      <ion-label class="medium-text">Notification Sound</ion-label>
+      <ion-toggle [(ngModel)]="isToggle" (ionChange)="changeNotif($event)"></ion-toggle>
+    </ion-item>
+
+    <div margin-top class="saperator"></div>
+    <button margin-top (click)="changeAddress()" class="medium-text font-italic" ion-item no-lines icon-end>Change Address</button>
+    <button (click)="gotoChangePassword()" class="medium-text font-italic" ion-item no-lines icon-end>Change Password</button>
+    <button (click)="deleteAccount()" class="medium-text font-italic" ion-item no-lines icon-end>Delete Account</button>
+  </div>
+
+</ion-content>

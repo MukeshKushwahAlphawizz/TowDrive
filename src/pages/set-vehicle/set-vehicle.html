@@ -1,0 +1,32 @@
+<ion-content class="set-bg montserrat-font" text-center>
+  <div text-left><ion-icon (click)="back()" class="back-arrow" name="ios-arrow-round-back"></ion-icon></div>
+  <div text-left class="main-div">
+    <h3 class="text-white">Enter Your Vehicle Details</h3>
+    <div text-wrap class="smaller-text text-grey">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</div>
+    <input class="full-input input-box small-text text-white" margin-top type="text" placeholder="Vehicle Name">
+    <input class="full-input input-box small-text text-white" margin-top type="text" placeholder="Vehicle Model">
+    <input class="full-input input-box small-text text-white" margin-top type="text" placeholder="Battery Name">
+    <input class="full-input input-box small-text text-white" margin-top type="text" placeholder="Battery Model No.">
+    <input class="full-input input-box small-text text-white" margin-top type="text" placeholder="Battery Capacity (Ex:44.0 AH)">
+
+    <div class="row" margin-top>
+      <div col-6 style="padding-left: 0;padding-top: 0">
+        <ion-item style="min-height: 1rem" class="input-box" no-lines no-padding margin-right>
+          <ion-datetime no-margin no-padding placeholder="Time" class="select-date small-text text-white" item-right displayFormat="HH:MM"></ion-datetime>
+          <ion-icon class="text-white calender" item-right name="md-time"></ion-icon>
+        </ion-item>
+      </div>
+      <div col-6 style="padding-right: 0; padding-top: 0">
+        <ion-item style="min-height: 1rem" class="input-box" no-lines no-padding>
+          <ion-datetime no-margin no-padding placeholder="Date" class="select-date small-text text-white" item-right displayFormat="DD-MMM-YYYY"></ion-datetime>
+          <ion-icon class="text-white calender" item-right name="calendar"></ion-icon>
+        </ion-item>
+      </div>
+    </div>
+    <ion-item margin-top no-lines class="medium-text">
+      <div>Service Charge</div>
+      <div item-right>$50</div>
+    </ion-item>
+    <button (click)="pay()" class="top-margin" ion-button full>Pay</button>
+  </div>
+</ion-content>
