@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Geolocation} from "@ionic-native/geolocation";
+import {UtilProvider} from "../../providers/util/util";
+import {User} from "../../providers";
+import {Storage} from "@ionic/storage";
 
-/**
- * Generated class for the DriverHomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,10 +13,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class DriverHomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  token:any = '';
+  constructor(public navCtrl: NavController,
+              private geolocation: Geolocation,
+              public storage:Storage,
+              public util:UtilProvider,
+              public user:User,
+              public navParams: NavParams) {
+    this.storage.get('token').then(token=>{
+      this.token = token;
+    })
   }
 
   ionViewDidLoad() {
+    this.getUserLocation();
   }
 
   openNotif() {
@@ -27,5 +35,32 @@ export class DriverHomePage {
 
   accept() {
     this.navCtrl.push('TrackLocationPage');
+  }
+
+  getUserLocation() {
+    console.log('getUserLocation called !!!!!!!!');
+    this.geolocation.getCurrentPosition().then((data) => {
+      console.log('lat >>',data.coords.latitude,' lng :',data.coords.longitude);
+      this.updateDriverLocation(data.coords.latitude,data.coords.longitude)
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {
+      console.log('watch position >>',data.coords);
+      this.updateDriverLocation(data.coords.latitude,data.coords.longitude)
+    });
+  }
+
+   updateDriverLocation(lat,lng) {
+     let data = {
+       latitude:lat,
+       longitude:lng
+     }
+     this.user.updateDriverLatLng(data,this.token).subscribe(res=>{
+     },error => {
+       console.log(error);
+     })
   }
 }

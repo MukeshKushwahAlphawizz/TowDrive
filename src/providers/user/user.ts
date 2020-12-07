@@ -16,6 +16,7 @@ export class User {
   //driver
   driver_register : string = 'Authentication/driver_register';
   getcontent : string = 'Authentication/getcontent';
+  update_user_lat_lang : string = 'Users//update_user_lat_lang';
 
   constructor(public api: Api) { }
 
@@ -58,6 +59,12 @@ export class User {
   forgotPasswordApi(data: any,role:any) {
     let header = new HttpHeaders({'Role':role});
     let seq = this.api.post(this.forgot_password, data,{headers:header}).share();
+    return seq;
+  }
+
+  updateDriverLatLng(data: any,token:any) {
+    let header = new HttpHeaders({'Authorization':token});
+    let seq = this.api.post(this.update_user_lat_lang, data,{headers:header}).share();
     return seq;
   }
 

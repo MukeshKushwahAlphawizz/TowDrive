@@ -1,0 +1,27 @@
+page-history-detail {
+  .underline{
+    width: 15%;
+    height: 5px;
+    background: #F7DB3A;
+    border-radius: 20px;
+    margin-top: 5pt;
+  }
+  .round{
+    padding: 11pt 15pt;
+    border-radius: 50%;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    width: 40pt;
+    height: 40pt;
+  }
+  .award-img{
+    height: 25pt;
+  }
+  [col-6],[col-5]{
+    padding: 0;
+  }
+  .item[no-lines], .item.item[no-lines] .item-inner {
+   margin-left: 0 !important;
+  }
+}

@@ -7,6 +7,8 @@ import {Storage} from "@ionic/storage";
 import {Facebook, FacebookLoginResponse} from "@ionic-native/facebook";
 import {HttpClient} from "@angular/common/http";
 import {GooglePlus} from "@ionic-native/google-plus";
+import {FCM} from "@ionic-native/fcm";
+import {Platform} from "ionic-angular/index";
 
 
 @IonicPage()
@@ -27,9 +29,16 @@ export class SignUpPage {
               public user : User,
               public storage : Storage,
               public fb: Facebook,
+              public platform : Platform,
+              public fcm: FCM,
               public httpClient: HttpClient,
               private googlePlus: GooglePlus,
               public navParams: NavParams) {
+    platform.ready().then(() => {
+      if (platform.is('cordova')) {
+        this.getFirebaseToken();
+      }
+    });
     this.setupSignUpForm();
     this.storage.get('userType').then(userType=>{
       if (userType == USERTYPE_DRIVER){
@@ -46,6 +55,7 @@ export class SignUpPage {
       email : this.signUpForm.value.email,
       mobile : this.signUpForm.value.mobileNumber,
       password : this.signUpForm.value.password,
+      firebaseToken:this.firebaseToken
     }
     if (this.isDriver){
       this.navCtrl.push('VehicleDetailsPage',{requestData:JSON.stringify(data)});
@@ -175,5 +185,25 @@ export class SignUpPage {
     },error => {
       this.util.dismissLoader();
     })
+  }
+  getFirebaseToken() {
+    this.fcm.subscribeToTopic('marketing');
+    this.fcm.getToken().then(token => {
+      this.firebaseToken = token;
+      console.log('token >>>',this.firebaseToken);
+    });
+
+    this.fcm.onNotification().subscribe(data => {
+      if(data.wasTapped){
+        console.log("Received in background",data);
+      } else {
+        console.log("Received in foreground",data);
+      }
+    });
+
+    this.fcm.onTokenRefresh().subscribe(token => {
+      // console.log('onTokenRefresh called !!!',token);
+    });
+    this.fcm.unsubscribeFromTopic('marketing');
   }
 }

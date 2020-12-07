@@ -5,12 +5,6 @@ import {User} from "../../providers";
 import {Storage} from "@ionic/storage";
 import {ActionSheetController} from "ionic-angular/index";
 
-/**
- * Generated class for the PersonalDetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -20,7 +14,6 @@ import {ActionSheetController} from "ionic-angular/index";
 export class PersonalDetailPage {
   startDate: String = new Date().toISOString();
   endDate: String = new Date().toISOString();
-  firebaseToken: any = '';
   firstName: any = '';
   lastName : any = '';
   address : any = '';
@@ -31,6 +24,7 @@ export class PersonalDetailPage {
     email:'',
     mobileNumber:'',
     password:'',
+    firebaseToken:''
   };
   imageName: string = 'Upload Photo';
   constructor(public navCtrl: NavController,
@@ -56,7 +50,7 @@ export class PersonalDetailPage {
     formData.append('email',this.requestData.email);
     formData.append('mobile',this.requestData.mobile);
     formData.append('password',this.requestData.password);
-    formData.append('firebaseToken',this.firebaseToken);
+    formData.append('firebaseToken',this.requestData.firebaseToken);
     formData.append('first_name',this.firstName);
     formData.append('last_name',this.lastName);
     formData.append('address',this.address);

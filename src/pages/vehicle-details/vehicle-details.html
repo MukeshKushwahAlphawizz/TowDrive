@@ -28,6 +28,19 @@
       <input name="backgroundCheck" id="backgroundCheck" class="fileInput" type="file" (change)="backgroundCheckEvent($event)"/>
     </div>
 
+    <input [(ngModel)]="address" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Address">
+    <ion-item margin-top class="input-box small-text text-white" no-lines>
+      <ion-label item-left class="medium-text text-white label-select">Select Service</ion-label>
+      <ion-select item-right [(ngModel)]="vehicleService" class="medium-text select-option">
+        <ion-option value="1">Tyre Change</ion-option>
+        <ion-option value="2">Breakdown Recovery</ion-option>
+        <ion-option value="3">Scrap Vehicle</ion-option>
+        <ion-option value="4">Battery Start</ion-option>
+        <ion-option value="5">Vehicle Delivery</ion-option>
+        <ion-option value="6">Mobile Machanic</ion-option>
+      </ion-select>
+    </ion-item>
+
     <div style="margin: 35pt 0">
       <button (click)="save()" class="small-text" ion-button full>
         <span>Save And Start</span><span margin-left><ion-icon class="forward-icon" name="ios-arrow-round-forward"></ion-icon></span>

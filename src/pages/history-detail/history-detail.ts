@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the MyHistoryPage page.
+ * Generated class for the HistoryDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,23 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-my-history',
-  templateUrl: 'my-history.html',
+  selector: 'page-history-detail',
+  templateUrl: 'history-detail.html',
 })
-export class MyHistoryPage {
+export class HistoryDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MyHistoryPage');
+    console.log('ionViewDidLoad HistoryDetailPage');
   }
 
-  openNotification() {
-    this.navCtrl.push('NotificationPage');
-  }
-
-  goDetail() {
-    this.navCtrl.push('HistoryDetailPage');
-  }
 }

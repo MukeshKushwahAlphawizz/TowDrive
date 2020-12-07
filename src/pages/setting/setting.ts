@@ -59,6 +59,9 @@ export class SettingPage {
         setTimeout(()=>{
           this.util.dismissLoader();
         })
+      },error => {
+        console.log(error);
+        this.util.dismissLoader();
       })
     }).catch(err=>{
       console.log(err);

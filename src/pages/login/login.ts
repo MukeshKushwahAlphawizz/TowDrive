@@ -7,6 +7,7 @@ import {USERTYPE_DRIVER, UtilProvider} from "../../providers/util/util";
 import {Facebook, FacebookLoginResponse} from "@ionic-native/facebook";
 import {GooglePlus} from "@ionic-native/google-plus";
 import {HttpClient} from "@angular/common/http";
+import {FCM} from "@ionic-native/fcm";
 
 @IonicPage()
 @Component({
@@ -26,9 +27,15 @@ export class LoginPage {
               public util : UtilProvider,
               public storage : Storage,
               public fb: Facebook,
+              public fcm: FCM,
               public httpClient: HttpClient,
               private googlePlus: GooglePlus,
               public formBuilder: FormBuilder) {
+    platform.ready().then(() => {
+      if (platform.is('cordova')) {
+        this.getFirebaseToken();
+      }
+    });
     this.setupLoginFormData();
     this.storage.get('userType').then(userType=>{
       if (userType == USERTYPE_DRIVER){
@@ -160,5 +167,25 @@ export class LoginPage {
     },error => {
       this.util.dismissLoader();
     })
+  }
+  getFirebaseToken() {
+    this.fcm.subscribeToTopic('marketing');
+    this.fcm.getToken().then(token => {
+      this.firebaseToken = token;
+      console.log('token >>>',this.firebaseToken);
+    });
+
+    this.fcm.onNotification().subscribe(data => {
+      if(data.wasTapped){
+        console.log("Received in background",data);
+      } else {
+        console.log("Received in foreground",data);
+      }
+    });
+
+    this.fcm.onTokenRefresh().subscribe(token => {
+      // console.log('onTokenRefresh called !!!',token);
+    });
+    this.fcm.unsubscribeFromTopic('marketing');
   }
 }

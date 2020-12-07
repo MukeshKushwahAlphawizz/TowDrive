@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {App} from "ionic-angular/index";
 
 @IonicPage()
 @Component({
@@ -8,7 +9,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ChatListPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public app:App,
+              public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -19,6 +22,6 @@ export class ChatListPage {
   }
 
   openChat() {
-    this.navCtrl.setRoot('ChatPage');
+    this.app.getRootNav().push('ChatPage');
   }
 }

@@ -25,7 +25,6 @@ export class MyApp {
       this.splashScreen.hide();
 
       this.storage.get('userData').then(userData=>{
-        console.log('userData',userData);
         if (userData){
           this.rootPage = 'MenuPage';
         }else {

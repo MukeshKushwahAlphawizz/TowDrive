@@ -34,7 +34,7 @@ export class UtilProvider {
       this.loading.present();
     }
   }
-  presentLoader(msg) {
+  presentLoader(msg?) {
     if (this.loader){
       this.dismissLoader();
     }else{

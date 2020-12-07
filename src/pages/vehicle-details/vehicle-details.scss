@@ -52,6 +52,15 @@ page-vehicle-details {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
+  .label-select{
+    margin: 0!important;
+  }
+  .select-option{
+    max-width: 100%;
+    width: 100%;
+    text-align: right;
+    padding: 0 8px 0 0 !important;
+    margin: 0 !important;
+  }
 
 }

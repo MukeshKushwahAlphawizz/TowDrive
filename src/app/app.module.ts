@@ -15,6 +15,8 @@ import { UtilProvider } from '../providers/util/util';
 import { GooglePlus } from '@ionic-native/google-plus';
 import {Facebook} from "@ionic-native/facebook";
 import { SocialSharing } from '@ionic-native/social-sharing';
+import {FCM} from "@ionic-native/fcm";
+import { Geolocation } from '@ionic-native/geolocation';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -51,6 +53,8 @@ export function createTranslateLoader(http: HttpClient) {
     Facebook,
     GooglePlus,
     SocialSharing,
+    FCM,
+    Geolocation,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UtilProvider
   ]
