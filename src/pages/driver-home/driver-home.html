@@ -10,36 +10,42 @@
       <button (click)="openNotif()" class="text-black" padding ion-button icon-only>
         <ion-icon name="ios-notifications-outline"></ion-icon>
       </button>
-    </ion-buttons >
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="set-bg">
-  <div padding margin-top>
-    <ion-item no-lines no-padding margin-top class="set-item">
-      <img class="user-image set-no-margin" item-left src="assets/img/user1.png">
-      <div class="set-no-margin" style="padding-left: 5pt">
-        <div class="accept-reject-div">
-          <span><button class="reject-btn" ion-button>Reject</button></span>
-          <span><button (click)="accept()" class="accept-btn" ion-button>Accept</button></span>
+  <ion-refresher class="pull-refresh" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div margin text-center padding-top class="bold-font big-text text-white" *ngIf="isListEmpty">No booking requests are available</div>
+  <div *ngIf="!isListEmpty">
+    <div padding margin-top *ngFor="let item of allRequest">
+      <ion-item no-lines no-padding margin-top class="set-item">
+        <img class="user-image set-no-margin" item-left [src]="item.image && item.image !==''?item.image:'assets/img/user1.png'">
+        <div class="set-no-margin" style="padding-left: 5pt">
+          <div class="accept-reject-div">
+            <span><button class="reject-btn" ion-button>Reject</button></span>
+            <span><button (click)="accept(item)" class="accept-btn" ion-button>Accept</button></span>
+          </div>
+          <h2>{{item.first_name}} {{item.last_name}}</h2>
+          <div class="middle smaller-text">Location : {{item.location}}</div>
+          <div class="smaller-text bold-font">Services : {{item.servicename}}</div>
         </div>
-        <h2>John Don</h2>
-        <div class="middle smaller-text">Location : Location Name here</div>
-        <div class="smaller-text bold-font">Services : Tyre Change</div>
-      </div>
-    </ion-item>
+      </ion-item>
 
-    <ion-item no-lines no-padding margin-top class="set-item">
-      <img class="user-image set-no-margin" item-left src="assets/img/user1.png">
-      <div class="set-no-margin" style="padding-left: 5pt">
-        <div class="accept-reject-div">
-          <span><button class="reject-btn" ion-button>Reject</button></span>
-          <span><button (click)="accept()" class="accept-btn" ion-button>Accept</button></span>
+      <!-- <ion-item no-lines no-padding margin-top class="set-item">
+        <img class="user-image set-no-margin" item-left src="assets/img/user1.png">
+        <div class="set-no-margin" style="padding-left: 5pt">
+          <div class="accept-reject-div">
+            <span><button class="reject-btn" ion-button>Reject</button></span>
+            <span><button (click)="accept()" class="accept-btn" ion-button>Accept</button></span>
+          </div>
+          <h2>John Don</h2>
+          <div class="middle smaller-text">Location : Location Name here</div>
+          <div class="smaller-text bold-font">Services : Breakdown Recovery</div>
         </div>
-        <h2>John Don</h2>
-        <div class="middle smaller-text">Location : Location Name here</div>
-        <div class="smaller-text bold-font">Services : Breakdown Recovery</div>
-      </div>
-    </ion-item>
+      </ion-item> -->
+    </div>
   </div>
 </ion-content>

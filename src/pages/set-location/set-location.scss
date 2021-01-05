@@ -23,4 +23,12 @@ page-set-location {
     background: #F7DB3A;
     padding: 3pt 12pt;
   }
+  .location-input{
+    width: 77%;
+    border: none;
+  }
+
+  ::placeholder {color: grey;opacity: 1;}
+  :-ms-input-placeholder {color: grey}
+  ::-ms-input-placeholder {color: grey}
 }

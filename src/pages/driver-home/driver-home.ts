@@ -13,20 +13,30 @@ import {Storage} from "@ionic/storage";
 })
 export class DriverHomePage {
 
-  token:any = '';
+  userData: any = {};
+  allRequest: any = [];
+  isListEmpty: boolean = false;
+  interval: any;
+  myallRequest: any;
   constructor(public navCtrl: NavController,
               private geolocation: Geolocation,
               public storage:Storage,
               public util:UtilProvider,
               public user:User,
               public navParams: NavParams) {
-    this.storage.get('token').then(token=>{
-      this.token = token;
-    })
+    this.storage.get('userData').then(userData=>{
+      this.userData = JSON.parse(userData);
+      this.getAllRequest(true).then(data=>{
+        this.allRequest = data;
+        this.allRequest.length>0?this.isListEmpty=false:this.isListEmpty=true;
+      }).catch(err=>{
+        this.allRequest.length>0?this.isListEmpty=false:this.isListEmpty=true;
+      });
+    });
   }
 
   ionViewDidLoad() {
-    this.getUserLocation();
+    this.getDriverLocation();
   }
 
   openNotif() {
@@ -37,9 +47,9 @@ export class DriverHomePage {
     this.navCtrl.push('TrackLocationPage');
   }
 
-  getUserLocation() {
+  getDriverLocation() {
     console.log('getUserLocation called !!!!!!!!');
-    this.geolocation.getCurrentPosition().then((data) => {
+    this.geolocation.getCurrentPosition({enableHighAccuracy:true}).then((data) => {
       console.log('lat >>',data.coords.latitude,' lng :',data.coords.longitude);
       this.updateDriverLocation(data.coords.latitude,data.coords.longitude)
     }).catch((error) => {
@@ -58,9 +68,46 @@ export class DriverHomePage {
        latitude:lat,
        longitude:lng
      }
-     this.user.updateDriverLatLng(data,this.token).subscribe(res=>{
+     this.user.updateDriverLatLng(data,this.userData.Authorization).subscribe(res=>{
      },error => {
        console.log(error);
      })
+  }
+
+  getAllRequest(showLoader) {
+    return new Promise((resolve, reject) => {
+      if (showLoader)this.util.presentLoader();
+      this.user.getAllBookingRequest(this.userData.Authorization).subscribe(res=>{
+        let resp:any=res;
+        if (resp.status){
+          resolve(resp.data);
+        }else {
+          this.util.presentToast(resp.message);
+          reject(resp.message);
+        }
+        if (showLoader){
+          setTimeout(()=>{
+            this.util.dismissLoader();
+          },500);
+        }
+      },error => {
+        console.error(error);
+        if (showLoader)this.util.dismissLoader();
+        reject(error);
+      })
+    })
+  }
+
+  doRefresh(refresher) {
+    this.isListEmpty = false;
+    this.getAllRequest(false).then(data=>{
+      this.allRequest = data;
+      this.allRequest.length>0?this.isListEmpty=false:this.isListEmpty=true;
+      refresher.complete();
+    }).catch(err=>{
+      console.log(err);
+      refresher.complete();
+      this.allRequest.length>0?this.isListEmpty=false:this.isListEmpty=true;
+    })
   }
 }

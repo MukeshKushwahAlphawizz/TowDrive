@@ -1,6 +1,8 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, NgZone, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Geolocation} from "@ionic-native/geolocation";
+import {UtilProvider} from "../../providers/util/util";
+import {Storage} from "@ionic/storage";
 
 declare var google;
 
@@ -11,36 +13,33 @@ declare var google;
 })
 export class SetLocationPage {
   @ViewChild('mapElement') mapNativeElement: ElementRef;
-  geocoder = new google.maps.Geocoder;
+  service = new google.maps.places.AutocompleteService();
+  autocompleteItemsSearch: any = [];
   map: any = '';
-  category: any = '';
+  myLocation: any = '';
   isRequestSent:boolean=false;
+  marker:any='';
+  lat: any = '';
+  lng: any = '';
+  address: any = '';
   constructor(public navCtrl: NavController,
-              private geolocation: Geolocation,
+              public geolocation: Geolocation,
+              public util: UtilProvider,
+              public storage: Storage,
+              public zone: NgZone,
               public navParams: NavParams) {
     this.isRequestSent = navParams.data.isRequestSent;
-    this.category = navParams.data.category;
+    storage.get('myLocationObject').then(myLocationObject=>{
+      this.myLocation = myLocationObject.location;
+      this.lat = myLocationObject.lat;
+      this.lng = myLocationObject.lng;
+      this.address = myLocationObject.address;
+      this.addNewMarker(new google.maps.LatLng(myLocationObject.lat,myLocationObject.lng));
+    })
   }
 
   ionViewDidLoad() {
     this.initMap();
-  }
-  createMap(latLng) {
-    let mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeControl: false,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    this.map = new google.maps.Map(this.mapNativeElement.nativeElement, mapOptions);
-    let marker = new google.maps.Marker(
-      {
-        map: this.map,
-        draggable: false,
-        animation: google.maps.Animation.DROP,
-        //icon: 'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png',
-        position: this.map.getCenter()
-      });
   }
 
   back() {
@@ -49,43 +48,73 @@ export class SetLocationPage {
 
 
   change() {
-    // this.isRequestSent=true;
+    this.myLocation = '';
   }
 
   set() {
-    if (this.isRequestSent){
-      // this.isRequestSent = false;
-      this.navCtrl.setRoot('MenuPage');
-    }else {
-      this.navCtrl.push('SetVehiclePage');
-    }
+    this.storage.set('myLocationObject',{location:this.myLocation,lat:this.lat,lng:this.lng,address:this.address}).then(()=>{
+      this.navCtrl.pop();
+    });
   }
 
-  initMap() {
-    this.geolocation.getCurrentPosition().then((data) => {
-      console.log('lat >>',data.coords.latitude,' lng :',data.coords.longitude);
-      let latLng = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
-      this.createMap(latLng);
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
-
+  initMap(){
+    let latLng = new google.maps.LatLng(this.lat,this.lng);
+    let mapOptions = {
+      center: latLng,
+      zoom: 15,
+      disableDefaultUI: true,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    this.map = new google.maps.Map(this.mapNativeElement.nativeElement, mapOptions);
+    /*this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((resp) => {
+      console.log('lat >>',resp.coords.latitude,'lng >>',resp.coords.longitude);
+      let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+      this.addNewMarker(latLng);
+    }).catch(err=>{
+      console.log('google map error :',err);
+    });*/
     /*let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
       console.log('watch position >>',data.coords);
     });*/
   }
-
-  //geocoder method to fetch address from coordinates passed as arguments
-  getLatLngFromAddress(latlng) {
-    return new Promise((resolve, reject) => {
-      this.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
-        if (status === 'OK') {
-          resolve(results[0].geometry.location);
-        }else {
-          reject();
+  onChangeLocation(event) {
+    if (event == '') {
+      this.autocompleteItemsSearch = [];
+      return;
+    }
+    const me = this;
+    this.service.getPlacePredictions({ input: event }, function (predictions, status) {
+      me.autocompleteItemsSearch = [];
+      me.zone.run(function () {
+        if (predictions) {
+          predictions.forEach(function (prediction) {
+            me.autocompleteItemsSearch.push(prediction);
+          });
         }
       });
     });
+  }
+  chooseItemSource(sourceData: any) {
+    this.myLocation = sourceData.description;
+    this.autocompleteItemsSearch = [];
+    let geocoder = new google.maps.Geocoder;
+    this.util.geocodeAddress(geocoder,this.myLocation).then(result=>{
+      this.lat = result['lat'];
+      this.lng = result['lng'];
+      this.addNewMarker(new google.maps.LatLng(result['lat'], result['lng']));
+    }).catch(err=>{
+    });
+  }
+  addNewMarker(location) {
+    if (this.marker){
+      this.marker.setMap(null);
+    }
+    this.marker = new google.maps.Marker({
+      position: location,
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+    });
+    this.map.setCenter(location);
   }
 }

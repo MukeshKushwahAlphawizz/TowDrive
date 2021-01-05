@@ -15,44 +15,53 @@
 </ion-header>
 
 <ion-content padding class="set-bg">
-  <div>
-    <ion-item (click)="goDetail()" margin-top no-lines class="grey-div">
-      <div item-left class="round" style="background: #890C26">R</div>
-      <div item-start>
-        <div class="text-white smaller-text">Service Name : Tyre Change</div>
-        <div class="text-white middle smaller-text">Name : John Doe</div>
-        <div class="text-white smaller-text">Address : 405 Street, Madcane</div>
-      </div>
-      <div item-right text-center>
-        <div class="price text-yellow">$100</div>
-        <div class="text-white small-text top-margin">Card Payment</div>
-      </div>
-    </ion-item>
+  <ion-refresher class="pull-refresh" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="isListEmpty" margin text-center class="bold-font big-text">No History is available</div>
+  <div *ngIf="isListEmpty">
+    <div *ngFor="let item of historyList">
+      <ion-item (click)="goDetail()" margin-top no-lines class="grey-div">
+        <div item-left class="round" style="background: #890C26">R</div>
+        <div item-start>
+          <div class="text-white smaller-text">Service Name : Tyre Change</div>
+          <div class="text-white middle smaller-text">Name : John Doe</div>
+          <div class="text-white smaller-text">Address : 405 Street, Madcane</div>
+        </div>
+        <div item-right text-center>
+          <div class="price text-yellow">$100</div>
+          <div class="text-white small-text top-margin">Card Payment</div>
+        </div>
+      </ion-item>
 
-    <ion-item (click)="goDetail()" margin-top no-lines class="grey-div">
-      <div item-left class="round" style="background: #54CFB0">R</div>
-      <div item-start>
-        <div class="text-white smaller-text">Service Name : Tyre Change</div>
-        <div class="text-white middle smaller-text">Name : John Doe</div>
-        <div class="text-white smaller-text">Address : 405 Street, Madcane</div>
-      </div>
-      <div item-right text-center>
-        <div class="price text-yellow">$100</div>
-        <div class="text-white small-text top-margin">Card Payment</div>
-      </div>
-    </ion-item>
+      <ion-item (click)="goDetail()" margin-top no-lines class="grey-div">
+        <div item-left class="round" style="background: #54CFB0">R</div>
+        <div item-start>
+          <div class="text-white smaller-text">Service Name : Tyre Change</div>
+          <div class="text-white middle smaller-text">Name : John Doe</div>
+          <div class="text-white smaller-text">Address : 405 Street, Madcane</div>
+        </div>
+        <div item-right text-center>
+          <div class="price text-yellow">$100</div>
+          <div class="text-white small-text top-margin">Card Payment</div>
+        </div>
+      </ion-item>
 
-    <ion-item (click)="goDetail()" margin-top no-lines class="grey-div">
-      <div item-left class="round" style="background: #F7DB3A">R</div>
-      <div item-start>
-        <div class="text-white smaller-text">Service Name : Tyre Change</div>
-        <div class="text-white middle smaller-text">Name : John Doe</div>
-        <div class="text-white smaller-text">Address : 405 Street, Madcane</div>
-      </div>
-      <div item-right text-center>
-        <div class="price text-yellow">$100</div>
-        <div class="text-white small-text top-margin">Card Payment</div>
-      </div>
-    </ion-item>
+      <ion-item (click)="goDetail()" margin-top no-lines class="grey-div">
+        <div item-left class="round" style="background: #F7DB3A">R</div>
+        <div item-start>
+          <div class="text-white smaller-text">Service Name : Tyre Change</div>
+          <div class="text-white middle smaller-text">Name : John Doe</div>
+          <div class="text-white smaller-text">Address : 405 Street, Madcane</div>
+        </div>
+        <div item-right text-center>
+          <div class="price text-yellow">$100</div>
+          <div class="text-white small-text top-margin">Card Payment</div>
+        </div>
+      </ion-item>
+    </div>
   </div>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

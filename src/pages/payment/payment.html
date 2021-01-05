@@ -16,21 +16,39 @@
 
 <ion-content padding>
   <ion-label class="txt bold-font medium-text" margin-top >Total Price</ion-label>
-  <ion-label class="bold-font price-txt" margin-top>$50</ion-label>
+  <ion-label class="bold-font price-txt" margin-top>${{requestData.amount}}</ion-label>
   <ion-label class="txt medium-text" margin-top>Payment Method</ion-label>
   <div class="row">
     <div col-6 class="left-btn">
-      <button class="payment-btn txt" ion-button full>PayPal
+      <button (click)="paypal()" no-margin ion-button full [ngClass]="isPaypal?'purple_bg':''"
+              class="payment-btn txt">PayPal
         <ion-icon margin-left class="bold-font" name="ios-checkmark-circle-outline"></ion-icon>
       </button>
     </div>
     <div col-6 class="right-btn">
-      <button class="payment-btn txt" ion-button full>Card
+      <button class="payment-btn txt" (click)="cardPay()" no-margin ion-button full [ngClass]="isPaypal?'':'purple_bg'">Card
         <ion-icon margin-left class="bold-font" name="ios-checkmark-circle-outline"></ion-icon>
       </button>
     </div>
   </div>
-  <ion-label class="medium-bold small-text" margin-top padding-top>Card Number</ion-label>
+  <div [hidden]="!isPaypal">
+    <div padding margin id="paypal-button"></div>
+  </div>
+  <div [hidden]="isPaypal">
+    <form padding action="/" method="post" id="payment-form">
+      <div class="form-row">
+        <div id="card-element">
+        </div>
+        <div id="card-errors" role="alert"></div>
+      </div>
+      <div text-center class="pay-now">
+        <button (click)="payNow()" no-margin ion-button full class="no-shadow">PAY NOW</button>
+      </div>
+      <!--<button class="text-white text-transfrom pay-button" ion-button round>Process to pay</button>-->
+      <!--<div margin text-center><button margin-top ion-button round small>Pay</button></div>-->
+    </form>
+  </div>
+  <!--<ion-label class="medium-bold small-text" margin-top padding-top>Card Number</ion-label>
   <ion-item no-padding no-lines class="box text-grey">
     <ion-icon item-left class="card-icon" name="card"></ion-icon>
     <input item-start no-margin type="text" placeholder="  ****   ******   ****" style="padding: 5pt" class="full-input txt small-text">
@@ -52,9 +70,9 @@
   <ion-label class="medium-bold txt small-text" margin-top>Card Holder Name</ion-label>
   <div margin-bottom class="box">
     <input item-start no-margin type="text" placeholder="Name Here" padding class="full-input txt small-text">
-  </div>
+  </div>-->
 
 </ion-content>
-<ion-footer>
+<!--<ion-footer>
   <button (click)="payNow()" ion-button full class="footer-btn">Pay Now</button>
-</ion-footer>
+</ion-footer>-->

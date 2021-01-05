@@ -8,6 +8,8 @@ import moment from "moment";
 
 export const USERTYPE_RIDER = 'Rider';
 export const USERTYPE_DRIVER = 'Driver';
+declare var google;
+
 @Injectable()
 export class UtilProvider {
   base64Image: any;
@@ -16,6 +18,7 @@ export class UtilProvider {
   loader: Loading;
   smallAlert: any;
   toast: any;
+  geocoder = new google.maps.Geocoder;
   constructor(public http: HttpClient,public toastCtrl:ToastController,
               private loadingCtrl: LoadingController,
               private user: User,
@@ -146,5 +149,31 @@ export class UtilProvider {
   randomImg(){
     let randomNumber = Math.floor(Math.random() * 1000) + 1;
     return "image" + randomNumber;
+  }
+
+  //geocoder method to fetch address from coordinates passed as arguments
+  getAddressFromLatLng(latlng) {
+    return new Promise((resolve, reject) => {
+      this.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
+        if (status === 'OK') {
+          // console.log('results[0].geometry.location',results[0].geometry.location);
+          // console.log('results[0].geometry.location',results[0].formatted_address);
+          resolve(results[0].formatted_address);
+        }else {
+          reject();
+        }
+      });
+    });
+  }
+
+  geocodeAddress(geocoder,address) {
+    // let geocoder = new google.maps.Geocoder;
+    return new Promise((resolve, reject) => {
+      geocoder.geocode({ address: address }, (results, status) => {
+        if (status === "OK") {
+          resolve({lat:results[0].geometry.location.lat(),lng:results[0].geometry.location.lng()})
+        }
+      });
+    });
   }
 }

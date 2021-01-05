@@ -11,11 +11,11 @@ page-edit-profile {
     width: 22pt;
     margin: 45pt auto auto 55pt;
   }
-  .user-img{
-    width: 70pt;
-    border-radius: 50%;
-    height: 70pt;
+  .user-image{
+    width: 70pt !important;
+    height: 70pt !important;
     object-fit: cover;
+    border-radius: 50%;
   }
   .input-form{
     margin: 30pt;

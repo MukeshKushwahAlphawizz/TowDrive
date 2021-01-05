@@ -5,13 +5,6 @@ import {USERTYPE_DRIVER, UtilProvider} from "../../providers/util/util";
 import {User} from "../../providers";
 import {ActionSheetController} from "ionic-angular/index";
 
-/**
- * Generated class for the EditProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-edit-profile',
@@ -55,7 +48,6 @@ export class EditProfilePage {
         this.mobileNumber = this.userData.mobile;
         this.address = this.userData.address;
         this.profileImgToShow = this.userData.image;
-        console.log('userdata is ===',this.userData);
       }
     });
   }

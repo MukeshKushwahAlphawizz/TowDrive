@@ -1,7 +1,7 @@
 <div *ngIf="!isRequestSent" text-left><ion-icon (click)="back()" class="back-arrow" name="ios-arrow-round-back"></ion-icon></div>
 <ion-content>
   <div #mapElement id="mapElement" [ngStyle]="{'height':isRequestSent?'50%':'70%'}" style="width: 100%;"></div>
-  <div *ngIf="!isRequestSent" class="main-div">
+  <div *ngIf="!isRequestSent" class="main-div" margin-bottom>
     <div class="saperator-grey"></div>
     <div class="medium-text montserrat-font bold-font" padding>Select Location</div>
     <div class="saperator-grey"></div>
@@ -9,12 +9,17 @@
       <div class="text-grey small-text">Current Location</div>
       <ion-item no-padding no-lines>
         <ion-icon item-left class="text-grey pin-icon" name="pin"></ion-icon>
-        <div item-start class="medium-text bold-font">Park Slope</div>
+        <!--<div item-start class="medium-text bold-font">Park Slope</div>-->
+        <input (input)='onChangeLocation($event.target.value)' item-start class="location-input" type="text" [(ngModel)]="myLocation">
         <div (click)="change()" item-right class="small-text" style="color: red" >Change</div>
       </ion-item>
+      <div class="location-option" *ngFor="let item of this.autocompleteItemsSearch" tappable
+           (click)="chooseItemSource(item)">
+        <div>{{item.description}}</div>
+      </div>
     </div>
     <div class="saperator-grey"></div>
-    <div padding class="text-grey small-text">Complete Address (optional)</div>
+    <input [(ngModel)]="address" padding placeholder="Complete Address (optional)" class="full-input" type="text">
     <div class="saperator-grey"></div>
   </div>
 

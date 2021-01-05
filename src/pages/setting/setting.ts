@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Storage} from "@ionic/storage";
 import {USERTYPE_DRIVER, UtilProvider} from "../../providers/util/util";
 import {User} from "../../providers";
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
 @IonicPage()
 @Component({
@@ -20,6 +21,7 @@ export class SettingPage {
               public storage:Storage,
               public util:UtilProvider,
               public user:User,
+              public nativeSettings:OpenNativeSettings,
               public navParams: NavParams) {
     this.storage.get('userType').then(userType=>{
       if (userType == USERTYPE_DRIVER){
@@ -74,11 +76,12 @@ export class SettingPage {
   }
 
   changeAddress() {
-
+    this.navCtrl.push('EditProfilePage');
   }
 
   changeNotif(event) {
-
+    // this.nativeSettings.open('application_details');
+    this.nativeSettings.open('notification_id');
   }
 
   selectLanguage() {

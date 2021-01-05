@@ -20,10 +20,10 @@
   </ion-refresher>
   <div *ngIf="isListEmpty" style="margin: 50pt" text-center class="bold-font">No Notifications are available</div>
 
-  <div margin-top *ngIf="!isListEmpty">
+  <div *ngIf="!isListEmpty" margin-top>
     <ion-item class="small-text" no-lines style="min-height: 1rem" text-center>
       <div class="top_title">Today</div>
-      <div (click)="clearAll(true,false)" item-right>Clear All</div>
+      <div (click)="clear(true)" item-right>Clear All</div>
     </ion-item>
     <div>
       <div *ngIf="true">

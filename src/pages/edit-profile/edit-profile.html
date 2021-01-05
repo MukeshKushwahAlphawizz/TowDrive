@@ -18,7 +18,7 @@
 <ion-content class="set-bg">
   <div class="top" text-center>
     <img (click)="openPicker()" class="edit" src="assets/img/edit.png">
-    <img (click)="openPicker()" class="user-img" [src]="profileImgToShow!==''?profileImgToShow:'assets/img/user-default.png'">
+    <img (click)="openPicker()" class="user-image" [src]="profileImgToShow!==''?profileImgToShow:'assets/img/user-default.png'">
   </div>
   <div class="input-form">
     <input [(ngModel)]="firstName" class="full-input input-box small-text text-white" margin-top type="text" placeholder="First Name">

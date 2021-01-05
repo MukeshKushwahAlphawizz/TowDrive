@@ -66,3 +66,11 @@ button{
 :-ms-input-placeholder {color: white}
 ::-ms-input-placeholder {color: white}
 .back-button-text-ios, .back-button-icon-ios {color: black;}
+.location-option {
+  padding: 5px;
+  color: gray;
+  margin-left: 10px;
+}
+.has-refresher > .scroll-content{
+  border-top: none !important;
+}

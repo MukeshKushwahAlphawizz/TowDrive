@@ -13,10 +13,21 @@ export class User {
   delete_accountUrl : string = 'Authentication/delete_account';
   socialLoginUrl : string = 'SocialLogin/Login';
   forgot_password : string = 'Authentication/forgot_password';
+  get_vehicle_service : string = 'Users/get_vehicle_service';
+  service_booking : string = 'Users//service_booking';
+  get_notification_list : string = 'Users/get_notification_list';
+  clear_notification : string = 'Users/clear_notification';
+  driver_current_status : string = 'Users//driver_current_status';
+  customer_history_list : string = 'Users/my_history_list';
+
   //driver
   driver_register : string = 'Authentication/driver_register';
   getcontent : string = 'Authentication/getcontent';
   update_user_lat_lang : string = 'Users//update_user_lat_lang';
+  get_service_booking_request : string = 'Drivers/get_service_booking_request';
+  accept_booking_request : string = 'Drivers/accept_booking_request';
+  trip_start_end : string = 'Drivers/trip_start_end';
+  driver_history_list : string = 'Drivers/my_history_list';
 
   constructor(public api: Api) { }
 
@@ -37,17 +48,17 @@ export class User {
     return seq;
   }
   updateProfile(data: any,token:any,role:any) {
-    let header = new HttpHeaders({'Authorization':token,'Role':role});
+    let header = new HttpHeaders({'Authorizations':token,'Role':role});
     let seq = this.api.post(this.profile_updateUrl, data,{headers:header}).share();
     return seq;
   }
   changePassword(data: any,token:any,role:any) {
-    let header = new HttpHeaders({'Authorization':token,'Role':role});
+    let header = new HttpHeaders({'Authorizations':token,'Role':role});
     let seq = this.api.post(this.changepasswordUrl, data,{headers:header}).share();
     return seq;
   }
   deleteAccount(data: any,token:any,role:any) {
-    let header = new HttpHeaders({'Authorization':token,'Role':role});
+    let header = new HttpHeaders({'Authorizations':token,'Role':role});
     let seq = this.api.post(this.delete_accountUrl, data,{headers:header}).share();
     return seq;
   }
@@ -63,13 +74,52 @@ export class User {
   }
 
   updateDriverLatLng(data: any,token:any) {
-    let header = new HttpHeaders({'Authorization':token});
+    let header = new HttpHeaders({'Authorizations':token});
     let seq = this.api.post(this.update_user_lat_lang, data,{headers:header}).share();
     return seq;
   }
 
   getContent(data: any) {
     let seq = this.api.post(this.getcontent, data).share();
+    return seq;
+  }
+
+  getAllNotifications(data: any,token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let seq = this.api.post(this.get_notification_list, data,{headers:header}).share();
+    return seq;
+  }
+  clearNotifications(data: any,token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let seq = this.api.post(this.clear_notification, data,{headers:header}).share();
+    return seq;
+  }
+  getDriverStatus(data: any,token:any) {
+    let header = new HttpHeaders({'Authorization':token});
+    let seq = this.api.post(this.driver_current_status, data,{headers:header}).share();
+    return seq;
+  }
+  getHistory(data: any,token:any,type) {
+    let header = new HttpHeaders({'Authorizations':token});
+    if (type){
+      //customer history
+      let seq = this.api.post(this.customer_history_list, data,{headers:header}).share();
+      return seq;
+    }else {
+      //driver history
+      let seq = this.api.post(this.driver_history_list, data,{headers:header}).share();
+      return seq;
+    }
+  }
+
+  serviceBooking(data: any,token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let seq = this.api.post(this.service_booking, data,{headers:header}).share();
+    return seq;
+  }
+  getAllBookingRequest(token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let seq = this.api.get(this.get_service_booking_request, '',{headers:header}).share();
     return seq;
   }
 }
