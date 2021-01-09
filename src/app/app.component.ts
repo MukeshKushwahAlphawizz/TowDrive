@@ -3,9 +3,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Platform } from 'ionic-angular';
-import {Config} from "ionic-angular/index";
+import {Config, Events} from "ionic-angular/index";
 import {Storage} from "@ionic/storage";
 import {FCM} from "@ionic-native/fcm";
+import {UtilProvider} from "../providers/util/util";
 
 @Component({
   template: `
@@ -19,6 +20,8 @@ export class MyApp {
               private statusBar: StatusBar,
               private config: Config,
               public fcm: FCM,
+              public util : UtilProvider,
+              public events : Events,
               private storage: Storage,
               private splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -57,9 +60,31 @@ export class MyApp {
 
     this.fcm.onNotification().subscribe(data => {
       if(data.wasTapped){
-        console.log("Received in background",data);
+        console.log("Received in background",JSON.stringify(data));
       } else {
-        console.log("Received in foreground",data);
+        console.log("Received in foreground",JSON.stringify(data));
+      }
+
+      if (data.types === '1'){
+        //vehicle service request
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('bookingRequest',data);
+      }else if (data.types === '2'){
+        //booking request accepted
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('bookingAccepted',data);
+      }else if (data.types === '3'){
+        //booking request declined
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('bookingRejected',true);
+      }else if (data.types === '4'){
+        //Trip Started
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('tripStarted',data);
+      }else if (data.types === '5'){
+        //Trip End
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('tripEnded',true);
       }
     });
 

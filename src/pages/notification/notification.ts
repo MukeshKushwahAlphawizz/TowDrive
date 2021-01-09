@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {UtilProvider} from "../../providers/util/util";
+import {USERTYPE_DRIVER, UtilProvider} from "../../providers/util/util";
 import {User} from "../../providers";
 import {Storage} from "@ionic/storage";
 
@@ -20,11 +20,17 @@ export class NotificationPage {
   isPast: boolean = false;
   isListEmpty: boolean = false;
   userData:any={}
+  isDriver: boolean = false;
   constructor(public navCtrl: NavController,
               public user: User,
               public util: UtilProvider,
               public storage: Storage,
               public navParams: NavParams) {
+    this.storage.get('userType').then(userType=> {
+      if (userType == USERTYPE_DRIVER) {
+        this.isDriver = true;
+      }
+    })
   }
 
   ionViewDidLoad() {
@@ -41,6 +47,7 @@ export class NotificationPage {
   }
 
   refresh() {
+    this.getUserData();
   }
 
   getUserData() {
@@ -88,6 +95,7 @@ export class NotificationPage {
           })
           this.notificationList.length > 0 ? this.isListEmpty = false: this.isListEmpty = true;
           this.pageNumber = this.pageNumber + 1;
+          console.log(this.notificationList);
           resolve('');
         }else {
           pageNumber==1? this.notificationList = []:'';
@@ -127,17 +135,16 @@ export class NotificationPage {
     })
   }
 
-  clear(isClearAll: boolean) {
+  clear(isClearAll: boolean,isPast) {
     let d : any = new Date();
     let yesterday : any = '';
     if (isClearAll){
       yesterday = d.setDate(d.getDate() - 1);
+      yesterday = new Date(yesterday);
     }
     let data = {
-      "user_id":this.userData.id,
-      "user_type":"1",
-      "is_clear":isClearAll?'1':'2',
-      "notification_date":isClearAll?yesterday.getTime():d.getTime()
+      "is_clear":isClearAll?'2':'1',
+      "notification_date":isPast?'':isClearAll?yesterday.getTime().toString():d.getTime().toString()
     }
     this.util.presentConfirm('Clear notification','Are you sure want to clear?').then(succ=>{
       this.util.presentLoader('Clearing..');

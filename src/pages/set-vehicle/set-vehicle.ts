@@ -9,7 +9,7 @@ import {Storage} from "@ionic/storage";
 })
 export class SetVehiclePage {
   startDate: String = new Date().toISOString();
-  endDate: String = new Date().toISOString();
+
   requestData : any = {
     service_id:'1',
     current_location:'',
@@ -22,7 +22,6 @@ export class SetVehiclePage {
     pickup_time:'',
     vehicle_name:'',
     vehicle_model:'',
-    vin:'',
     tyre_size:'',
     breakdown_scrap:'',
     mobile_machenic_option:'',

@@ -19,7 +19,7 @@ export class User {
   clear_notification : string = 'Users/clear_notification';
   driver_current_status : string = 'Users//driver_current_status';
   customer_history_list : string = 'Users/my_history_list';
-
+  get_route_details : string = 'Users/get_route_details';
   //driver
   driver_register : string = 'Authentication/driver_register';
   getcontent : string = 'Authentication/getcontent';
@@ -95,7 +95,7 @@ export class User {
     return seq;
   }
   getDriverStatus(data: any,token:any) {
-    let header = new HttpHeaders({'Authorization':token});
+    let header = new HttpHeaders({'Authorizations':token});
     let seq = this.api.post(this.driver_current_status, data,{headers:header}).share();
     return seq;
   }
@@ -121,5 +121,20 @@ export class User {
     let header = new HttpHeaders({'Authorizations':token});
     let seq = this.api.get(this.get_service_booking_request, '',{headers:header}).share();
     return seq;
+  }
+  acceptBooking(data: any,token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let res = this.api.post(this.accept_booking_request, data,{headers:header}).share();
+    return res;
+  }
+  tripStartEnd(data: any,token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let res = this.api.post(this.trip_start_end, data,{headers:header}).share();
+    return res;
+  }
+  getRouteDetail(data: any,token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let res = this.api.post(this.get_route_details, data,{headers:header}).share();
+    return res;
   }
 }

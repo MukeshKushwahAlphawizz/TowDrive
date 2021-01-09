@@ -8,7 +8,7 @@ import {Facebook, FacebookLoginResponse} from "@ionic-native/facebook";
 import {HttpClient} from "@angular/common/http";
 import {GooglePlus} from "@ionic-native/google-plus";
 import {FCM} from "@ionic-native/fcm";
-import {Platform} from "ionic-angular/index";
+import {Events, Platform} from "ionic-angular/index";
 
 
 @IonicPage()
@@ -26,6 +26,7 @@ export class SignUpPage {
   constructor(public navCtrl: NavController,
               public formBuilder: FormBuilder,
               public util:UtilProvider,
+              public events:Events,
               public user : User,
               public storage : Storage,
               public fb: Facebook,
@@ -197,7 +198,28 @@ export class SignUpPage {
       if(data.wasTapped){
         console.log("Received in background",data);
       } else {
-        console.log("Received in foreground",data);
+        console.log("SignUpPage Received in foreground",data);
+      }
+      if (data.types === '1'){
+        //vehicle service request
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('bookingRequest',data);
+      }else if (data.types === '2'){
+        //booking request accepted
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('bookingAccepted',data);
+      }else if (data.types === '3'){
+        //booking request declined
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('bookingRejected',true);
+      }else if (data.types === '4'){
+        //Trip Started
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('tripStarted',data);
+      }else if (data.types === '5'){
+        //Trip End
+        this.util.presentAlert('Notification',data.body);
+        this.events.publish('tripEnded',true);
       }
     });
 

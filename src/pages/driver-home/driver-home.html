@@ -20,13 +20,13 @@
   </ion-refresher>
   <div margin text-center padding-top class="bold-font big-text text-white" *ngIf="isListEmpty">No booking requests are available</div>
   <div *ngIf="!isListEmpty">
-    <div padding margin-top *ngFor="let item of allRequest">
-      <ion-item no-lines no-padding margin-top class="set-item">
-        <img class="user-image set-no-margin" item-left [src]="item.image && item.image !==''?item.image:'assets/img/user1.png'">
+    <div padding *ngFor="let item of allRequest">
+      <ion-item no-lines no-padding class="set-item">
+        <img class="user-image set-no-margin" item-left [src]="item.image && item.image !==''?item.image:'assets/img/user-default.png'">
         <div class="set-no-margin" style="padding-left: 5pt">
           <div class="accept-reject-div">
-            <span><button class="reject-btn" ion-button>Reject</button></span>
-            <span><button (click)="accept(item)" class="accept-btn" ion-button>Accept</button></span>
+            <span><button (click)="accept(item,0)" class="reject-btn" ion-button>Reject</button></span>
+            <span><button (click)="accept(item,1)" class="accept-btn" ion-button>Accept</button></span>
           </div>
           <h2>{{item.first_name}} {{item.last_name}}</h2>
           <div class="middle smaller-text">Location : {{item.location}}</div>

@@ -21,73 +21,84 @@
   <div *ngIf="isListEmpty" style="margin: 50pt" text-center class="bold-font">No Notifications are available</div>
 
   <div *ngIf="!isListEmpty" margin-top>
-    <ion-item class="small-text" no-lines style="min-height: 1rem" text-center>
+    <ion-item *ngIf="isTodayAvailable" class="small-text" no-lines style="min-height: 1rem" text-center>
       <div class="top_title">Today</div>
-      <div (click)="clear(true)" item-right>Clear All</div>
+      <div (click)="clear(false,false)" item-right>Clear All</div>
     </ion-item>
-    <div>
-      <div *ngIf="true">
-        <ion-item no-lines>
+    <div *ngFor="let item of notificationList">
+      <div *ngIf="item.isToday">
+        <div *ngIf="item.types ==='2'">
+          <!--type = 2 means booking accepted-->
+          <ion-item no-lines>
+            <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
+            <div class="content-div">
+              <div text-wrap class="small-text">{{item.message}}</div>
+              <div *ngIf="!isDriver && item.driver_name && item.driver_name !==''" text-wrap class="small-text"><b>Driver Name</b> : {{item.driver_name}}</div>
+            </div>
+          </ion-item>
+          <ion-item no-lines no-margin>
+            <button (click)="chatDriver()" no-margin item-right class="live_tracking chat-driver-btn" round
+                    ion-button>CHAT WITH DRIVER</button>
+            <button (click)="liveTracking()" no-margin item-right class="live_tracking live-tracking-btn" round
+                    ion-button>START LIVE TRACKING</button>
+          </ion-item>
+        </div>
+
+        <ion-item no-lines *ngIf="item.types !=='2'">
           <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
           <div class="content-div">
-            <div text-wrap class="small-text">Lorem Ispum Dollar has a dummy Text. Lorem Ispum Dollar has a dummy Text.</div>
+            <div text-wrap class="small-text">{{item.message}}</div>
+            <div *ngIf="isDriver && item.service_details">
+              <div text-wrap class="small-text"><b>Service Name</b> : {{item.service_details.servicename}}</div>
+              <div text-wrap class="small-text"><b>Location</b> : {{item.service_details.location}}</div>
+            </div>
+            <div *ngIf="!isDriver && item.driver_name && item.driver_name !==''" text-wrap class="small-text"><b>Driver Name</b> : {{item.driver_name}}</div>
           </div>
-        </ion-item>
-        <ion-item no-lines no-margin>
-          <button (click)="chatDriver()" no-margin item-right class="live_tracking chat-driver-btn" round
-                  ion-button>CHAT WITH DRIVER</button>
-          <button (click)="liveTracking()" no-margin item-right class="live_tracking live-tracking-btn" round
-                  ion-button>START LIVE TRACKING</button>
         </ion-item>
       </div>
     </div>
 
-    <ion-item no-lines>
-      <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
-      <div class="content-div">
-        <div text-wrap class="small-text">Lorem Ispum Dollar has a dummy Text. Lorem Ispum Dollar has a dummy Text.</div>
-      </div>
-    </ion-item>
 
-    <ion-item no-lines>
-      <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
-      <div class="content-div">
-        <div text-wrap class="small-text">Lorem Ispum Dollar has a dummy Text. Lorem Ispum Dollar has a dummy Text.</div>
-      </div>
-    </ion-item>
-
-    <ion-item margin-top class="small-text" no-lines style="min-height: 1rem" text-center>
+    <ion-item *ngIf="isYesterdayAvailable" margin-top class="small-text" no-lines style="min-height: 1rem" text-center>
       <div class="top_title">Yesterday</div>
-      <div (click)="clearAll(false,false)" item-right>Clear</div>
+      <div (click)="clear(false,false)" item-right>Clear</div>
     </ion-item>
-    <div>
-      <div>
+    <div *ngFor="let item of notificationList">
+      <div *ngIf="item.isYesterday">
         <ion-item no-lines>
           <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
           <div class="content-div">
-            <div text-wrap class="small-text">Lorem Ispum Dollar has a dummy Text. Lorem Ispum Dollar has a dummy Text.</div>
+            <div text-wrap class="small-text">{{item.message}}</div>
+            <div *ngIf="isDriver && item.service_details">
+              <div text-wrap class="small-text"><b>Service Name</b> : {{item.service_details.servicename}}</div>
+              <div text-wrap class="small-text"><b>Location</b> : {{item.service_details.location}}</div>
+            </div>
+            <div *ngIf="!isDriver && item.driver_name && item.driver_name !==''" text-wrap class="small-text"><b>Driver Name</b> : {{item.driver_name}}</div>
           </div>
         </ion-item>
       </div>
     </div>
 
-    <!--<ion-item *ngIf="isPast" margin-top class="small-text" no-lines style="min-height: 1rem" text-center>
+    <ion-item *ngIf="isPast" margin-top class="small-text" no-lines style="min-height: 1rem" text-center>
       <div class="top_title">Past</div>
-      <div (click)="clearAll(true,true)" item-right>Clear All</div>
+      <div (click)="clear(true,true)" item-right>Clear All</div>
     </ion-item>
     <div *ngFor="let item of notificationList">
       <div *ngIf="item.isOld">
-        <ion-item no-lines no-padding>
+        <ion-item no-lines>
           <ion-icon item-left class="notification_icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
           <div class="content-div">
-            <p text-wrap class="small-text bold-font">
-              {{item.message}}
-            </p>
-            <p *ngIf="item.route_details !==''" class="paragraph_details" text-wrap>({{item.route_details[0].from_destination}} - {{item.route_details[0].to_destination}})</p>
+            <div text-wrap class="small-text">{{item.message}}</div>
+            <div *ngIf="isDriver && item.service_details">
+              <div text-wrap class="small-text"><b>Service Name</b> : {{item.service_details.servicename}}</div>
+              <div text-wrap class="small-text"><b>Location</b> : {{item.service_details.location}}</div>
+            </div>
+            <div *ngIf="!isDriver && item.driver_name && item.driver_name !==''" text-wrap class="small-text"><b>Driver Name</b> : {{item.driver_name}}</div>
           </div>
         </ion-item>
       </div>
-    </div>-->
+    </div>
+
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>

@@ -24,4 +24,10 @@ page-history-detail {
   .item[no-lines], .item.item[no-lines] .item-inner {
    margin-left: 0 !important;
   }
+  .img-user{
+    width: 35pt;
+    height: 35pt;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 }

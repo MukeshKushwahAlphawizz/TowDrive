@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title text-center>Details</ion-title>
     <ion-buttons end>
-      <button padding ion-button icon-only>
+      <button padding ion-button icon-only (click)="openNotification()">
         <ion-icon class="text-black" name="ios-notifications-outline"></ion-icon>
       </button>
     </ion-buttons>
@@ -11,15 +11,17 @@
 
 <ion-content>
   <div padding margin-top>
-    <div class="big-text bold-font">Service : Battery Change</div>
+    <div class="big-text bold-font">Service : {{ detailData.service_name }}</div>
     <div class="underline"></div>
-    <div margin-top class="small-text text-dark">Id Number : <span class="text-black">#ABC123456</span><span class="right-align">Date : <span class="text-black">02 Nov 2020</span></span></div>
+    <div margin-top class="small-text text-dark">Id Number : <span class="text-black">#{{ detailData.id }}</span>
+      <span class="right-align">Date : <span class="text-black">{{detailData.create_dt | date: "dd MMM yyyy "}} </span></span></div>
   </div>
   <div class="saperator-grey"></div>
   <div padding>
     <ion-item no-lines>
-      <div item-left class="round" style="background: #890C26">R</div>
-      <div class="big-text">User Name</div>
+      <!--<div item-left class="round" style="background: #890C26">R</div>-->
+      <img item-left class="img-user" [src]="detailData.image&&detailData.image!==''?detailData.image:'assets/img/user-default.png'">
+      <div class="big-text">{{ detailData.driver_name }}</div>
     </ion-item>
   </div>
   <div class="saperator-grey"></div>
@@ -27,20 +29,20 @@
     <div>Location Point:</div>
     <ion-item no-lines no-padding margin-top>
       <ion-icon item-left style="font-size: 2.4rem" class="text-yellow" name="pin"></ion-icon>
-      <div text-wrap class="medium-text text-dark">405 Street, Madcane, Sunshine Restaurant</div>
+      <div text-wrap class="medium-text text-dark">{{ detailData.current_location }}</div>
     </ion-item>
   </div>
   <div class="saperator-grey"></div>
   <div padding class="row small-text text-dark">
     <div col-6>
       <div>Payment Details</div>
-      <div style="margin-top: 8pt">Total Charge<span class="right-align text-black">: £100</span></div>
-      <div style="margin-top: 5pt">Admin Charge 25%<span class="right-align">: (-)<span class="text-black"> £125</span></span></div>
+      <div style="margin-top: 8pt">Total Charge<span class="right-align text-black">: £{{ detailData.total_charge }}</span></div>
+      <div style="margin-top: 5pt">Admin Charge 25%<span class="right-align">: (-)<span class="text-black"> £{{ detailData.other_charge }}</span></span></div>
     </div>
     <div col-1></div>
     <div col-5>
       <div>Total Amount Received</div>
-      <div class="text-black" style="font-size: 3rem;margin-top: 5pt">£75</div>
+      <div class="text-black" style="font-size: 3rem;margin-top: 5pt">£{{ detailData.amount -  detailData.other_charge - detailData.total_charge }}</div>
     </div>
   </div>
   <div class="saperator-grey"></div>
@@ -51,7 +53,7 @@
       <div class="medium-text">Received</div>
       <div item-right text-left>
         <div class="small-text text-grey">Payment Mode:</div>
-        <ion-item style="min-height: 1rem" class="text-dark" no-lines no-padding><ion-icon style="font-size: 2rem;margin: 8px 5px 0px 0 !important;" item-left name="md-card"></ion-icon><div class="text-black medium-text">Bank Credit Card</div></ion-item>
+        <ion-item style="min-height: 1rem" class="text-dark" no-lines no-padding><ion-icon style="font-size: 2rem;margin: 8px 5px 0px 0 !important;" item-left name="md-card"></ion-icon><div class="text-black medium-text">{{detailData.payment_type}}</div></ion-item>
       </div>
     </ion-item>
   </div>

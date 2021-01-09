@@ -25,10 +25,26 @@ export class MenuPage {
               public navParams: NavParams) {
     this.storage.get('userType').then(userType=>{
       if (userType == USERTYPE_DRIVER){
-        this.rootPage = 'DriverHomePage';
+        let driverTripStartData = localStorage.getItem('userlat')
+        console.log('check driver trip start data >>>>',driverTripStartData);
+        if (driverTripStartData && driverTripStartData!=='null'){
+          this.rootPage = 'TrackLocationPage';
+        }else {
+          this.rootPage = 'DriverHomePage';
+        }
         this.isDriver = true;
       }else {
-        this.rootPage = 'HomePage';
+        storage.get('tripStartCustomerData').then(routeDetail=>{
+          // console.log('routeDetail >>>',routeDetail);
+          if (routeDetail){
+            this.storage.set('isRequestSent',true).then(()=>{
+              this.rootPage='SetLocationPage'
+            });
+          } else {
+            this.rootPage = 'HomePage';
+          }
+        })
+
         this.isDriver = false;
       }
     });
@@ -37,7 +53,6 @@ export class MenuPage {
   ionViewDidEnter() {
     this.storage.get('userData').then(userdata=>{
       this.userData = JSON.parse(userdata);
-      console.log('userdata is ===',this.userData);
     });
   }
 
@@ -63,7 +78,11 @@ export class MenuPage {
 
   exit() {
     this.util.presentConfirm('Confirm Exit','Are you Sure, you want to Exit?').then(res=>{
-      this.platform.exitApp();
+      // if (resp.status){
+        this.storage.set('userData',null);
+        this.navCtrl.setRoot('SelectTypePage');
+      // }
+      // this.platform.exitApp();
     }).catch(err=>{})
   }
 }

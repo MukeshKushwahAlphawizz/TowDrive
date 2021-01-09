@@ -28,20 +28,20 @@ export class MyHistoryPage {
   ionViewDidLoad() {
     this.pageNumber=1;
     this.storage.get('userType').then(userType=>{
-    this.storage.get('userData').then(userData=>{
-      this.userData=JSON.parse(userData);
-      if (userType == USERTYPE_DRIVER){
-        this.isCustomer = false;
-      }else {
-        this.isCustomer = true;
-      }
-      this.getHistory(this.isCustomer,true,this.pageNumber).then(res=>{
-        this.historyList=res;
-        this.historyList.lenght>0?this.isListEmpty=false:this.isListEmpty=true;
-      }).catch(err=>{
-        this.historyList.lenght>0?this.isListEmpty=false:this.isListEmpty=true;
+      this.storage.get('userData').then(userData=>{
+        this.userData=JSON.parse(userData);
+        if (userType == USERTYPE_DRIVER){
+          this.isCustomer = false;
+        }else {
+          this.isCustomer = true;
+        }
+        this.getHistory(this.isCustomer,true,this.pageNumber).then(res=>{
+          this.historyList=res;
+          this.historyList.lenght>0?this.isListEmpty=false:this.isListEmpty=true;
+        }).catch(err=>{
+          this.historyList.lenght>0?this.isListEmpty=false:this.isListEmpty=true;
+        })
       })
-    })
     });
   }
 
@@ -49,8 +49,9 @@ export class MyHistoryPage {
     this.navCtrl.push('NotificationPage');
   }
 
-  goDetail() {
-    this.navCtrl.push('HistoryDetailPage');
+  goDetail(item) {
+    // this.navCtrl.push('HistoryDetailPage');
+    this.navCtrl.push("HistoryDetailPage",{detail:item});
   }
 
   getHistory(isCustomer,pageNumber,isRefresh) {
@@ -64,14 +65,19 @@ export class MyHistoryPage {
       }
       this.user.getHistory(data,this.userData.Authorization,isCustomer).subscribe(res=>{
         let resp : any = res;
+        this.historyList = resp.data;
+        console.log(res);
+        this.historyList.length && this.historyList.length > 0?this.isListEmpty = false:this.isListEmpty = true;
         if (resp.status){
           resolve(resp.data);
         }else {
           reject(false)
+          this.historyList = [];
         }
         if (isRefresh){
           setTimeout(()=>{
             this.util.dismissLoader();
+            this.historyList.length && this.historyList.length > 0?this.isListEmpty = false:this.isListEmpty = true;
           },500)
         }
       });

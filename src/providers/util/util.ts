@@ -64,19 +64,22 @@ export class UtilProvider {
   }
 
   presentAlert(title,msg) {
-    if (!this.smallAlert){
-      this.smallAlert = this.alertCtrl.create({
-        title: title,
-        subTitle: msg,
-        buttons: [{
-          text: 'Ok',
-          handler: () => {
-            this.smallAlert = null;
-          }
-        }]
-      });
-      this.smallAlert.present();
-    }
+    return new Promise((resolve, reject) => {
+      if (!this.smallAlert) {
+        this.smallAlert = this.alertCtrl.create({
+          title: title,
+          subTitle: msg,
+          buttons: [{
+            text: 'Ok',
+            handler: () => {
+              this.smallAlert = null;
+              resolve();
+            }
+          }]
+        });
+        this.smallAlert.present();
+      }
+    });
   }
 
   presentToast(message) {

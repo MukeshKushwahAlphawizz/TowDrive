@@ -51,6 +51,8 @@ export class HomePage {
   }
 
   editLocation() {
-    this.navCtrl.push('SetLocationPage',{isRequestSent:false});
+    this.storage.set('isRequestSent',false).then(()=>{
+      this.navCtrl.push('SetLocationPage');
+    });
   }
 }

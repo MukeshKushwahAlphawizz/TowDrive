@@ -4,6 +4,9 @@ import {UtilProvider} from "../../providers/util/util";
 import {Storage} from "@ionic/storage";
 import {User} from "../../providers";
 import {PayPal, PayPalConfiguration, PayPalPayment} from "@ionic-native/paypal";
+import {App, Events} from "ionic-angular/index";
+
+
 
 declare var Stripe;
 declare var paypal: any;
@@ -25,10 +28,13 @@ export class PaymentPage {
 
   payPalBtn: any;
   payPalConfig:any;
+  isRequestAccepted : boolean = false;
   constructor(public navCtrl: NavController,
               public util:UtilProvider,
               public storage:Storage,
               public user:User,
+              public event:Events,
+              public app: App,
               private payPal: PayPal,
               public navParams: NavParams) {
     this.requestData=navParams.data.requestData;
@@ -49,6 +55,24 @@ export class PaymentPage {
         });
       }
     }
+
+    this.event.subscribe('bookingAccepted',(res)=>{
+      let item : any = res;
+      console.log('booking Accepted check notification data >>',item);
+      this.isRequestAccepted = true;
+      util.dismissLoader();
+      storage.set('currentRoute',JSON.parse(item.booking_info)).then(()=>{
+        this.storage.set('isRequestSent',true).then(()=>{
+          this.navCtrl.setRoot('SetLocationPage');
+        });
+      })
+      // console.log('JSON.parse(item.booking_info)',JSON.parse(item.booking_info));
+      /*item.types_id = JSON.parse(item.booking_info).id; //set booking id into types_id for live tracking page
+      // console.log('item is >>>>>',item);
+      this.storage.set('currentRoute',item).then(()=>{
+        this.navCtrl.setRoot('LiveTrackingPage');
+      })*/
+    })
   }
 
   ionViewDidLoad() {
@@ -113,7 +137,7 @@ export class PaymentPage {
       event.preventDefault();
       this.util.presentLoader('');
       this.stripe.createToken(this.card).then(result=>{
-        console.log('token >>>',JSON.stringify(result));
+        // console.log('token >>>',JSON.stringify(result));
         let data : any = result;
         let last4 = data.token.card.last4;
         let cardName = data.token.card.brand;
@@ -132,16 +156,27 @@ export class PaymentPage {
       let resp : any = res;
       this.util.presentToast(resp.message);
       if (resp.status){
-        this.util.presentAlert('','Request is successfully sent');
+        setTimeout(()=>{
+          this.util.dismissLoader();
+          this.util.presentLoader('Your request is sent to the driver, please wait until he confirms...');
+        },500)
+        setTimeout(()=>{
+          if (!this.isRequestAccepted){
+            this.util.dismissLoader();
+            this.util.presentAlert('Try Again','Your request has not accepted yet, please try again!').then(()=>{
+              // this.navCtrl.popToRoot();
+            });
+          }
+        },180000);
+        /*this.util.presentAlert('','Request is successfully sent');
         this.storage.set('currentRoute',null).then(()=>{
           // this.navCtrl.popToRoot();
-        });
+          this.app.getRootNav().setRoot('RequestAcceptPage');
+        });*/
       }else {
         this.util.presentAlert('',resp.message);
-      }
-      setTimeout(()=>{
         this.util.dismissLoader();
-      },500);
+      }
     },error => {
       console.error(error);
       this.util.dismissLoader();

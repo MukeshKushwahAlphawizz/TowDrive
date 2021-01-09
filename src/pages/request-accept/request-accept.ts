@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Storage} from "@ionic/storage";
 
 @IonicPage()
 @Component({
@@ -9,6 +10,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class RequestAcceptPage {
 
   constructor(public navCtrl: NavController,
+              public storage:Storage,
               public navParams: NavParams) {
   }
 
@@ -16,6 +18,8 @@ export class RequestAcceptPage {
   }
 
   continue() {
-    this.navCtrl.setRoot('SetLocationPage',{isRequestSent:true});
+    this.storage.set('isRequestSent',true).then(()=>{
+      this.navCtrl.setRoot('SetLocationPage');
+    });
   }
 }
