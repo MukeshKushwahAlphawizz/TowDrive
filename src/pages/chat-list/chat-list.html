@@ -15,52 +15,17 @@
 </ion-header>
 
 <ion-content class="montserrat-font">
-  <div>
-    <ion-item (click)="openChat()" margin-top no-lines>
-      <div item-left class="round" style="background: #63B258">J</div>
-      <div>
-        <div class="medium-text">John Doe<span class="right-align small-text">6 minutes ago</span></div>
-        <div class="text-grey top-margin font-italic small-text">Bro, i call u tomorrow</div>
+  <div class="bold big-text" text-center padding margin *ngIf="isListEmpty">Your chat list is empty</div>
+  <div *ngIf="!isListEmpty">
+  </div>
+  <div *ngFor="let user of allUsers">
+    <ion-item (click)="openChat(user)" margin-top no-lines>
+      <div item-left>
+        <img class="user-image-chat" [src]="user.image && user.image !=='' ? user.image:'assets/img/user-default.png'">
       </div>
-    </ion-item>
-
-    <ion-item (click)="openChat()" margin-top no-lines>
-      <div item-left class="round" style="background: #DE5475">E</div>
       <div>
-        <div class="medium-text">Eyra Din<span class="right-align small-text">12 minutes ago</span></div>
-        <div class="text-grey top-margin font-italic small-text">Attactment</div>
-      </div>
-    </ion-item>
-
-    <ion-item (click)="openChat()" margin-top no-lines>
-      <div item-left class="round" style="background: #890C26">R</div>
-      <div>
-        <div class="medium-text">Ron John<span class="right-align small-text">18 minutes ago</span></div>
-        <div class="text-grey top-margin font-italic small-text">Good Night....</div>
-      </div>
-    </ion-item>
-
-    <ion-item (click)="openChat()" margin-top no-lines>
-      <div item-left class="round" style="background: #63B258">J</div>
-      <div>
-        <div class="medium-text">John Doe<span class="right-align small-text">6 minutes ago</span></div>
-        <div class="text-grey top-margin font-italic small-text">Bro, i call u tomorrow</div>
-      </div>
-    </ion-item>
-
-    <ion-item (click)="openChat()" margin-top no-lines>
-      <div item-left class="round" style="background: #DE5475">E</div>
-      <div>
-        <div class="medium-text">Eyra Din<span class="right-align small-text">12 minutes ago</span></div>
-        <div class="text-grey top-margin font-italic small-text">Attactment</div>
-      </div>
-    </ion-item>
-
-    <ion-item (click)="openChat()" margin-top no-lines>
-      <div item-left class="round" style="background: #890C26">R</div>
-      <div>
-        <div class="medium-text">Ron John<span class="right-align small-text">18 minutes ago</span></div>
-        <div class="text-grey top-margin font-italic small-text">Good Night....</div>
+        <div class="medium-text">{{user.name}}<span class="right-align small-text">{{util.timeSince(user.last_message_time)}}</span></div>
+        <div class="text-grey top-margin font-italic small-text">{{user.last_message && user.last_message!==''?user.last_message:''}}</div>
       </div>
     </ion-item>
   </div>

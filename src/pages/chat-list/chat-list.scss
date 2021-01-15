@@ -8,6 +8,12 @@ page-chat-list {
     width: 40pt;
     height: 40pt;
   }
+  .user-image-chat{
+    width: 40pt;
+    height: 40pt;
+    object-fit: cover;
+    border-radius: 50%;
+  }
   .top-margin{
     margin-top: 3pt;
   }

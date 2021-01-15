@@ -158,6 +158,7 @@ export class UtilProvider {
   getAddressFromLatLng(latlng) {
     return new Promise((resolve, reject) => {
       this.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
+        console.log('result >>',results,' status',status);
         if (status === 'OK') {
           // console.log('results[0].geometry.location',results[0].geometry.location);
           // console.log('results[0].geometry.location',results[0].formatted_address);

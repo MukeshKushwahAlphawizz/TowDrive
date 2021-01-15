@@ -20,6 +20,9 @@ export class User {
   driver_current_status : string = 'Users//driver_current_status';
   customer_history_list : string = 'Users/my_history_list';
   get_route_details : string = 'Users/get_route_details';
+  recommended_service : string = 'Users/recommended_service';
+  service_feedback : string = 'Users/service_feedback';
+
   //driver
   driver_register : string = 'Authentication/driver_register';
   getcontent : string = 'Authentication/getcontent';
@@ -135,6 +138,16 @@ export class User {
   getRouteDetail(data: any,token:any) {
     let header = new HttpHeaders({'Authorizations':token});
     let res = this.api.post(this.get_route_details, data,{headers:header}).share();
+    return res;
+  }
+  addFeedback(data: any,token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let res = this.api.post(this.service_feedback, data,{headers:header}).share();
+    return res;
+  }
+  getRecommendedService(token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let res = this.api.get(this.recommended_service, '',{headers:header}).share();
     return res;
   }
 }

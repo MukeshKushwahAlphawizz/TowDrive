@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Storage} from "@ionic/storage";
+import {UtilProvider} from "../../providers/util/util";
 
 @IonicPage()
 @Component({
@@ -33,6 +34,7 @@ export class SetVehiclePage {
   }
   constructor(public navCtrl: NavController,
               public storage : Storage,
+              public util : UtilProvider,
               public navParams: NavParams) {
     this.requestData.service_id = navParams.data.category;
     storage.get('myLocationObject').then(myLocationObject=>{
@@ -52,7 +54,63 @@ export class SetVehiclePage {
   }
 
   pay() {
-    if (this.requestData)
+    if (this.requestData.vehicle_name.trim() ===''){
+      this.util.presentToast('Please enter your vehicle name');
+      return;
+    }
+    if (this.requestData.vehicle_model.trim() ===''){
+      this.util.presentToast('Please enter your vehicle model name');
+      return;
+    }
+    if (this.requestData.pickup_time.trim() ===''){
+      this.util.presentToast('Please select pickup time');
+      return;
+    }
+    if (this.requestData.pickup_date.trim() ===''){
+      this.util.presentToast('Please select pickup date');
+      return;
+    }
+    if (this.requestData.service_id === '1'){
+      //tyre change
+      if (this.requestData.tyre_size.trim() ===''){
+        this.util.presentToast('Please enter the tyre size');
+        return;
+      }
+    }else if (this.requestData.service_id === '2'){
+      //Breakdown Recovery
+      if (this.requestData.breakdown_scrap.trim() ===''){
+        this.util.presentToast('Please select service option');
+        return;
+      }
+    }else if (this.requestData.service_id === '3'){
+      //Scrap Vehicle
+      if (this.requestData.breakdown_scrap.trim() ===''){
+        this.util.presentToast('Please select service option');
+        return;
+      }
+    }else if (this.requestData.service_id === '4'){
+      //Battery Start
+      if (this.requestData.battery_name.trim() ===''){
+        this.util.presentToast('Please enter battery name');
+        return;
+      }
+      if (this.requestData.battery_model.trim() ===''){
+        this.util.presentToast('Please enter battery model');
+        return;
+      }
+      if (this.requestData.battery_capacity.trim() ===''){
+        this.util.presentToast('Please enter battery capacity');
+        return;
+      }
+    }else if (this.requestData.service_id === '5'){
+      //Vehicle Delivery
+    }else if (this.requestData.service_id === '6'){
+      //Mobile Mechanic
+      if (this.requestData.mobile_machenic_option.trim() ===''){
+        this.util.presentToast('Please select mobile mechanic options');
+        return;
+      }
+    }
     this.navCtrl.push('PaymentPage',{requestData:this.requestData});
   }
 }

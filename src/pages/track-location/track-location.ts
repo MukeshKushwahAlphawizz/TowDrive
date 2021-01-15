@@ -4,6 +4,7 @@ import { Storage } from "@ionic/storage";
 import { Geolocation } from "@ionic-native/geolocation";
 import { UtilProvider } from '../../providers/util/util';
 import { User } from '../../providers';
+import {FirebaseProvider} from "../../providers/firebase/firebase";
 
 
 
@@ -30,25 +31,19 @@ export class TrackLocationPage {
   customerlocation: any = '';
   driverlocation: any;
   booking_id: any = '';
+  customerData: any = {};
   constructor(public navCtrl: NavController,
               public storage:Storage,
               public util:UtilProvider,
               public user:User,
+              public firedb:FirebaseProvider,
               public geolocation:Geolocation,
               public navParams: NavParams) {
+    this.customerData = JSON.parse(localStorage.getItem("customerData"));
+    // console.log('this.customerData',this.customerData);
     this.customerlocation = localStorage.getItem("userlocation");
     this.customerlat = localStorage.getItem("userlat");
     this.customerlong = localStorage.getItem("userlang");
-    /*this.storage.get('myLocationObject').then(startedTripData=>{
-     this.tripData=startedTripData;
-    this.customerlat = localStorage.getItem("userlat");
-    this.customerlong = localStorage.getItem("userlang");
-    this.driverlocation =this.tripData.location;
-     // console.log('check trip data >>>>>>>',this.tripData);
-     let to = new google.maps.LatLng(this.customerlat, this.customerlong);
-     let from = new google.maps.LatLng(this.tripData.lat, this.tripData.lng);
-     this.calculateAndDisplayRoute(to,from,this.tripData,this.customerlat,this.customerlong);
-   })*/
   }
 
   ionViewDidLoad() {
@@ -66,11 +61,9 @@ export class TrackLocationPage {
   }
   getDriverLocation() {
     this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((data) => {
-      // console.log('getCurrentPosition from google @@@@@@@');
       this.updateDriverLocation(data.coords.latitude, data.coords.longitude)
       let latLng = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
       this.util.getAddressFromLatLng(latLng).then(address=>{
-        // console.log('driver location is >>',address);
         this.driverlocation = address;
       });
     }).catch((error) => {
@@ -78,7 +71,6 @@ export class TrackLocationPage {
     });
   }
   updateDriverLocation(lat, lng) {
-    //console.log('updateDriverLocation called ',lat,lng);
     let data = {
       latitude: lat,
       longitude: lng
@@ -100,7 +92,6 @@ export class TrackLocationPage {
       destination:to,
       travelMode: 'DRIVING'
     }, (response, status) => {
-      // console.log(response,status)
       if (status === 'OK') {
         that.lat2=userlat;
         that.long2=userlong;
@@ -147,7 +138,16 @@ export class TrackLocationPage {
   }
 
   openChat() {
-    this.navCtrl.push('ChatPage');
+    let customer = {
+      date_of_join:new Date().getTime(),
+      id:this.customerData.user_id+'_C',
+      image:this.customerData.image,
+      isDriver:false,
+      name:this.customerData.first_name+' '+this.customerData.last_name
+    }
+    this.firedb.addUser(customer,this.userData.id+'_D');
+    let chatRef = this.customerData.user_id+'_C'+'-'+this.userData.id+'_D';
+    this.navCtrl.push('ChatPage',{chatRef:chatRef,customer:customer,driver:this.userData});
   }
   startEnd(status){
     this.booking_id = localStorage.getItem("booking_id");
@@ -158,12 +158,10 @@ export class TrackLocationPage {
         "trip_status":status,
       }
       this.user.tripStartEnd(data,this.userData.Authorization).subscribe(res=>{
-        let resp : any =res;
+        let resp : any = res;
         if (resp.status){
-          // this.storage.set('startedTripData',null).then(()=>{
           localStorage.setItem('userlat',null);
-            this.navCtrl.setRoot("MenuPage");
-          // })
+          this.navCtrl.setRoot("MenuPage");
         }else {
           this.util.presentToast(resp.message);
         }

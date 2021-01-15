@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {USERTYPE_DRIVER, UtilProvider} from "../../providers/util/util";
 import {User} from "../../providers";
 import {Storage} from "@ionic/storage";
+import {FirebaseProvider} from "../../providers/firebase/firebase";
 
 
 @IonicPage()
@@ -24,6 +25,7 @@ export class NotificationPage {
   constructor(public navCtrl: NavController,
               public user: User,
               public util: UtilProvider,
+              public firedb: FirebaseProvider,
               public storage: Storage,
               public navParams: NavParams) {
     this.storage.get('userType').then(userType=> {
@@ -37,13 +39,25 @@ export class NotificationPage {
     this.getUserData();
   }
 
-  clearAll(b: boolean, b2: boolean) {
+  liveTracking(item: any) {
+    this.storage.set('currentRoute',item.service_details).then(()=>{
+      this.storage.set('isRequestSent',true).then(()=>{
+        this.navCtrl.push('SetLocationPage');
+      });
+    })
   }
 
-  liveTracking() {
-  }
-
-  chatDriver() {
+  chatDriver(driver: any) {
+    let driverData = {
+      date_of_join:new Date().getTime(),
+      id:driver.driver_id+'_D',
+      image:driver.driver_image,
+      isDriver:true,
+      name:driver.driver_name,
+    }
+    this.firedb.addUser(driverData,this.userData.id+'_C');
+    let chatRef = this.userData.id+'_C'+'-'+driverData.id;
+    this.navCtrl.push("ChatPage",{chatRef:chatRef,driver:driverData,customer:this.userData});
   }
 
   refresh() {
@@ -71,7 +85,7 @@ export class NotificationPage {
       this.user.getAllNotifications(data,this.userData.Authorization).subscribe(res=>{
         let response : any = res;
         if (response.status){
-          pageNumber == 1?this.notificationList = response.data:
+          pageNumber == '1'|| pageNumber == 1?this.notificationList = response.data:
             this.notificationList = [...this.notificationList,...response.data];
 
           this.notificationList = this.notificationList.filter(item=>{
@@ -98,7 +112,7 @@ export class NotificationPage {
           console.log(this.notificationList);
           resolve('');
         }else {
-          pageNumber==1? this.notificationList = []:'';
+          pageNumber==1||pageNumber=='1'? this.notificationList = []:'';
           this.notificationList.length > 0 ? this.isListEmpty = false: this.isListEmpty = true;
           reject('');
         }

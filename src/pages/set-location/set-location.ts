@@ -5,6 +5,7 @@ import {UtilProvider} from "../../providers/util/util";
 import {Storage} from "@ionic/storage";
 import {Events} from "ionic-angular/index";
 import {User} from "../../providers";
+import {FirebaseProvider} from "../../providers/firebase/firebase";
 
 declare var google;
 
@@ -37,12 +38,14 @@ export class SetLocationPage {
   driver_id: any = '';
   booking_id: any = '';
   currentRoute: any = '';
+  driverLocation: any = '';
   constructor(public navCtrl: NavController,
               public geolocation: Geolocation,
               public util: UtilProvider,
               public user: User,
               public storage: Storage,
               public events: Events,
+              public firedb: FirebaseProvider,
               public zone: NgZone,
               public navParams: NavParams) {
     storage.get('userData').then(userData=>{
@@ -54,7 +57,7 @@ export class SetLocationPage {
         clearInterval(this.interval);
       }
       this.storage.set('tripStartCustomerData',null);
-      this.navCtrl.setRoot('MenuPage');
+      this.navCtrl.setRoot('FeedbackPage',{routeDetail:this.routeDetail});
     });
   }
 
@@ -115,12 +118,19 @@ export class SetLocationPage {
         let to = new google.maps.LatLng(this.routeDetail.latitude, this.routeDetail.longitude);
         let from = new google.maps.LatLng(this.routeDetail.drop_latitude, this.routeDetail.drop_longitude);
         this.calculateAndDisplayRoute(from,to,this.routeDetail);
+        if (this.driverLocation&&this.driverLocation!==''){
+          //do nothing
+        }else {
+          this.util.getAddressFromLatLng({lat:parseFloat(driverResp.data.latitude),lng:parseFloat(driverResp.data.longitude)}).then(address=>{
+            this.driverLocation = address;
+          })
+        }
       }
     },error => {})
   }
 
   getRouteDetail(id) {
-    this.util.presentLoader('');
+    this.util.presentLoader();
     let data = {
       booking_id:id
     }
@@ -160,6 +170,9 @@ export class SetLocationPage {
   set() {
     if (this.isRequestSent){
       this.storage.set('tripStartCustomerData',null);
+      if (this.interval){
+        clearInterval(this.interval);
+      }
       this.navCtrl.setRoot('MenuPage');
     }else {
       this.storage.set('myLocationObject',{location:this.myLocation,lat:this.lat,lng:this.lng,address:this.address}).then(()=>{
@@ -263,5 +276,18 @@ export class SetLocationPage {
       },
       suppressMarkers: true
     });
+  }
+
+  openChat() {
+    let driverData = {
+      date_of_join:new Date().getTime(),
+      id:this.routeDetail.driver_id+'_D',
+      image:this.routeDetail.driver_image,
+      isDriver:true,
+      name:this.routeDetail.driver_name,
+    }
+    this.firedb.addUser(driverData,this.userData.id+'_C');
+    let chatRef = this.userData.id+'_C'+'-'+driverData.id;
+    this.navCtrl.push("ChatPage",{chatRef:chatRef,driver:driverData,customer:this.userData});
   }
 }

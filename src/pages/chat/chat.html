@@ -21,6 +21,41 @@
       <div *ngFor="let chat of chats;let i = index">
         <div *ngIf="!chat.isDriver">
           <ion-item no-padding no-lines>
+            <img class="other-user-img" [src]="customer.image && customer.image !=='' ? customer.image:'assets/img/user-default.png'">
+            <div class="other-div-content">
+              <div class="bold-font smaller-text">{{util.timeSince(chat.date)}}</div>
+              <div class="top-margin small-text msg-content-left">
+                <span class="triangle"></span>
+                <p>{{chat.message}}</p>
+              </div>
+              <!--<div text-wrap class="top-margin small-text message-left text-dark">{{chat.message}}</div>-->
+            </div>
+          </ion-item>
+        </div>
+
+        <div *ngIf="chat.isDriver">
+          <ion-item text-right no-padding no-lines>
+            <div class="my-div-content">
+              <div class="bold-font smaller-text">{{chat.dateTime}}</div>
+              <div class="message-right">
+                <div class="small-text msg-content-right">
+                  <span class="triangle"></span>
+                  <p text-wrap>{{chat.message}}</p>
+                </div>
+              </div>
+            </div>
+          </ion-item>
+          <div margin-right class="right-align">
+            <img class="my-user-img" [src]="driver.image&&driver.image!==''?driver.image:'assets/img/user-default.png'">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isDriver">
+      <!--chat for customer-->
+      <div *ngFor="let chat of chats;let i = index">
+        <div *ngIf="chat.isDriver">
+          <ion-item no-padding no-lines>
             <img class="other-user-img" [src]="driver.image && driver.image !=='' ? driver.image:'assets/img/user-default.png'">
             <div class="other-div-content">
               <div class="bold-font smaller-text">{{util.timeSince(chat.date)}}</div>
@@ -33,7 +68,7 @@
           </ion-item>
         </div>
 
-        <div *ngIf="chat.isMine">
+        <div *ngIf="!chat.isDriver">
           <ion-item text-right no-padding no-lines>
             <div class="my-div-content">
               <div class="bold-font smaller-text">{{chat.dateTime}}</div>
@@ -45,12 +80,9 @@
               </div>
             </div>
           </ion-item>
-          <div margin-right class="right-align"><img class="my-user-img" src="{{chat.userProfile}}"></div>
+          <div margin-right class="right-align"><img class="my-user-img" [src]="customer.image&&customer.image!==''?customer.image:'assets/img/user-default.png'"></div>
         </div>
       </div>
-    </div>
-    <div *ngIf="!isDriver">
-      <!--chat for customer-->
     </div>
 
   </div>

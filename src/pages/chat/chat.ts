@@ -12,39 +12,7 @@ import {Storage, StorageConfig} from "@ionic/storage";
 })
 export class ChatPage {
   @ViewChild(Content) content: Content;
-  chatList = [
-    {
-      userProfile:'assets/img/user-default.png',
-      dateTime:'10:22 am',
-      message:'Hey, Whats Ur Plan Today ?',
-      isMine:false
-    },
-    {
-      userProfile:'assets/img/user-default.png',
-      dateTime:'10:24 am',
-      message:'Hey, Whats up? mmm.. Nothing special for now.',
-      isMine:true
-    },
-    {
-      userProfile:'assets/img/user-default.png',
-      dateTime:'10:24 am',
-      message:'Great! I’ill Pick you in a moment.',
-      isMine:false
-    },
-    {
-      userProfile:'assets/img/user-default.png',
-      dateTime:'10:26 am',
-      message:'Okay i m waiting...',
-      isMine:true
-    },
-    {
-      userProfile:'assets/img/user-default.png',
-      dateTime:'',
-      message:'...',
-      isMine:false
-    },
 
-  ]
   chatRef:any={}
   chats: any[] = [];
   isListEmpty: boolean = false;
@@ -58,8 +26,10 @@ export class ChatPage {
               public util:UtilProvider,
               public storage:Storage,
               public navParams: NavParams) {
-    // this.chatRef = navParams.data.chatRef;
-    this.chatRef = '101_C-001_D'
+    this.chatRef = navParams.data.chatRef;
+    this.customer = navParams.data.customer;
+    this.driver = navParams.data.driver;
+    // this.chatRef = '101_C-001_D'
     this.storage.get('userType').then(userType=>{
       if (userType == USERTYPE_DRIVER){
         // this.userType = userType;
@@ -79,6 +49,7 @@ export class ChatPage {
         this.chats = data;
       }
       this.chats.length && this.chats.length>0?this.isListEmpty=false:this.isListEmpty=true;
+      // console.log('all chat is >>>',this.chats);
       setTimeout(()=>{
         this.scrollBottom();
         this.util.dismissLoader();
@@ -94,6 +65,22 @@ export class ChatPage {
     if (this.msg.trim() ===''){
       return;
     }
+    if (this.isDriver){
+      this.sendDriverMsg();
+    }else {
+      this.sendCustomerMsg()
+    }
+  }
+
+  scrollBottom(){
+    if (this.content){
+      setTimeout(()=>{
+        this.content.scrollToBottom();
+      },200)
+    }
+  }
+
+  sendCustomerMsg() {
     let message = {
       message:this.msg.trim(),
       date:new Date().getTime(),
@@ -105,22 +92,35 @@ export class ChatPage {
       this.scrollBottom();
       let customer = {
         date_of_join:new Date().getTime(),
-        id:'101_C',
-        image:'this.customer.image',
+        id:this.customer.id+'_C',
+        image:this.customer.image,
         isDriver:false,
-        name:'this.customer.first_name'
+        name:this.customer.first_name+' '+this.customer.last_name
       }
       //adding a customer user into driver
-      // this.firedb.addUser(customer,this.driver.id);
-      this.firedb.addUser(customer,'001_D');
+      this.firedb.addUser(customer,this.driver.id);
     }).catch(err=>{})
   }
 
-  scrollBottom(){
-    if (this.content){
-      setTimeout(()=>{
-        this.content.scrollToBottom();
-      },200)
+  sendDriverMsg() {
+    let message = {
+      message:this.msg.trim(),
+      date:new Date().getTime(),
+      isDriver:true,
+      isRead:false
     }
+    this.firedb.addMessage(message,this.chatRef).then(res=>{
+      this.msg = '';
+      this.scrollBottom();
+      let driver = {
+        date_of_join:new Date().getTime(),
+        id:this.driver.id+'_D',
+        image:this.driver.image,
+        isDriver:true,
+        name:this.driver.username !== ''?this.driver.username:this.driver.first_name+' '+this.driver.last_name
+      }
+      //adding a driver user into customer
+      this.firedb.addUser(driver,this.customer.id);
+    }).catch(err=>{})
   }
 }

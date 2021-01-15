@@ -13,7 +13,7 @@
     <div *ngIf="this.requestData.service_id == '2' || this.requestData.service_id == '3'">
       <ion-item margin-top class="input-box small-text text-white" no-lines no-padding>
         <ion-label padding-left>Select Options</ion-label>
-        <ion-select [(ngModel)]="requestData.breakdown_option">
+        <ion-select [(ngModel)]="requestData.breakdown_scrap">
           <ion-option value="Vehicle drives">Vehicle drives</ion-option>
           <ion-option value="Does not drive">Does not drive</ion-option>
           <ion-option value="Can access the vehicle on the road">Can access the vehicle on the road</ion-option>

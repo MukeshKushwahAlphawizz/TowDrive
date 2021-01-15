@@ -27,13 +27,13 @@
     <div class="saperator-grey"></div>
     <div style="margin-bottom: 25pt" class="medium-text montserrat-font bold-font" padding>
       {{currentRoute&&currentRoute.location?currentRoute.location:''}}
-      <span class="small-text right-align chat-bg">Chat</span></div>
+      <span class="small-text right-align chat-bg" (click)="openChat()">Chat</span></div>
     <div class="saperator-grey"></div>
     <div padding-top padding-left padding-right>
       <div class="text-grey small-text">Start</div>
       <ion-item no-padding no-lines>
         <ion-icon item-left class="text-grey pin-icon" name="pin"></ion-icon>
-        <div item-start class="medium-text bold-font">Park Slope</div>
+        <div item-start class="medium-text bold-font">{{driverLocation}}</div>
       </ion-item>
     </div>
     <div class="saperator-grey"></div>
@@ -41,7 +41,7 @@
       <div class="text-grey small-text">End</div>
       <ion-item no-padding no-lines>
         <ion-icon item-left class="text-grey pin-icon" name="pin"></ion-icon>
-        <div item-start class="medium-text bold-font">Park Slope</div>
+        <div item-start class="medium-text bold-font">{{currentRoute&&currentRoute.location?currentRoute.location:''}}</div>
       </ion-item>
     </div>
     <div class="saperator-grey"></div>

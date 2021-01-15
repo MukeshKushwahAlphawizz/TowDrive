@@ -43,7 +43,7 @@
       <div col-4 (click)="openLocationPage('4')">
         <div class="service-div">
           <img class="service-img" src="assets/imgs/battery_start.png">
-          <div class="text-yellow bold-font font-italic medium-text" margin-right>Battery Start</div>
+          <div class="text-yellow bold-font font-italic medium-text">Battery Start</div>
         </div>
       </div>
       <div col-4 (click)="openLocationPage('5')">
@@ -55,27 +55,27 @@
       <div col-4 (click)="openLocationPage('6')">
         <div class="service-div">
           <img class="service-img" src="assets/imgs/machenic.png">
-          <div class="text-yellow bold-font font-italic medium-text">Mobile Machanic</div>
+          <div class="text-yellow bold-font font-italic medium-text">Mobile Mechanic</div>
         </div>
       </div>
     </div>
 
     <div margin-top class="small-text text-white left-padding">Recommended Services</div>
     <div class="row" margin-top>
-      <div col-6>
-        <img class="recom-img" src="assets/imgs/recom2.png">
+      <div col-6 *ngFor="let item of recomService">
+        <img class="recom-img" [src]="item.banner_image && item.banner_image !==''?item.banner_image:'assets/imgs/recom2.png'">
         <div class="recom-text text-white small-text">
-          <div>Tyre Changing</div>
-          <div margin-top>@ Rs199</div>
+          <div>{{item.name}}</div>
+          <div margin-top>@ £{{item.charge}}</div>
         </div>
       </div>
-      <div col-6>
+      <!--<div col-6>
         <img class="recom-img" src="assets/imgs/recom1.png">
         <div class="recom-text text-white small-text">
           <div>Tyre Changing</div>
           <div margin-top>@ Rs199</div>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </ion-content>

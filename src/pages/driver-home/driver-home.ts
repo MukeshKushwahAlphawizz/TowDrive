@@ -61,7 +61,9 @@ export class DriverHomePage {
   }
 
   accept(detailData,isAccept) {
+    console.log('detailData >>>>>>',detailData);
     localStorage.setItem("userlat", detailData.lat);
+    localStorage.setItem("customerData", JSON.stringify(detailData));
     localStorage.setItem("userlang", detailData.lang);
     localStorage.setItem("userlocation", detailData.location);
     localStorage.setItem("booking_id", detailData.id);

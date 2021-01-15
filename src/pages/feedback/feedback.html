@@ -19,16 +19,16 @@
     <h3 class="bold-font" text-center>How Much You Like Service?</h3>
     <div padding-top>
       <div class="item-feedback">
-        <ion-label><span class="left-item smaller-text">Service Name</span><span item-right class="right-item small-text">Tyre Change</span></ion-label>
+        <ion-label><span class="left-item smaller-text">Service Name</span><span item-right class="right-item small-text">{{feedback.service_name}}</span></ion-label>
       </div>
       <div margin-top class="item-feedback">
-        <ion-label><span class="left-item smaller-text">Service Status</span><span item-right class="right-item small-text">Done</span></ion-label>
+        <ion-label><span class="left-item smaller-text">Service Status</span><span item-right class="right-item small-text">{{feedback.service_status}}</span></ion-label>
       </div>
       <div margin-top class="item-feedback">
-        <ion-label><span class="left-item smaller-text">Payment Mode</span><span item-right class="right-item small-text">Online</span></ion-label>
+        <ion-label><span class="left-item smaller-text">Payment Mode</span><span item-right class="right-item small-text">{{feedback.payment_mode}}</span></ion-label>
       </div>
       <div margin-top class="item-feedback">
-        <ion-label><span class="left-item smaller-text">Approx Cost</span><span item-right class="right-item small-text" style="padding: 0 18pt;">$56</span></ion-label>
+        <ion-label><span class="left-item smaller-text">Approx Cost</span><span item-right class="right-item small-text" style="padding: 0 18pt;">£{{feedback.approx_cost}}</span></ion-label>
       </div>
     </div>
     <h5 style="margin-top: 30pt" class="bold-font">Provide Ratings</h5>
@@ -39,7 +39,8 @@
                             activeColor = "#F5C700"
                             defaultColor = "#A3A3A3"
                             readonly="false"
-                            rating="3"
+                            rating="{{feedback.timings}}"
+                            (ratingChanged)="timingChange($event)"
                             fontSize = "32px">
           </ionic3-star-rating>
       </span>
@@ -52,7 +53,8 @@
                             activeColor = "#F5C700"
                             defaultColor = "#A3A3A3"
                             readonly="false"
-                            rating="4"
+                            rating="{{feedback.service_provider}}"
+                            (ratingChanged)="serviceProviderChange($event)"
                             fontSize = "32px">
           </ionic3-star-rating>
       </span>
@@ -65,12 +67,13 @@
                             activeColor = "#F5C700"
                             defaultColor = "#A3A3A3"
                             readonly="false"
-                            rating="4"
+                            rating="{{feedback.work_quality}}"
+                            (ratingChanged)="workQualityChange($event)"
                             fontSize = "32px">
           </ionic3-star-rating>
       </span>
     </div>
-    <input class="full-input input-box1 small-text" type="text" placeholder="Write Something">
+    <input [(ngModel)]="feedback.comment" class="full-input input-box1 small-text" type="text" placeholder="Write Something">
   </div>
 </ion-content>
 <ion-footer>

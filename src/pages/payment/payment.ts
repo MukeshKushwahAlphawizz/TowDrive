@@ -39,17 +39,20 @@ export class PaymentPage {
               public navParams: NavParams) {
     this.requestData=navParams.data.requestData;
     this.payPalConfig = {
-      env: 'sandbox',
-      client: {
+      /*env: 'sandbox',*/
+      env: 'production',
+      /*client: {
         sandbox: 'AWtxst4d1DsZBHTSYyuy9tC2Kv2qzEDQdZMNeQhlOzrq4iqwHD09_iIjPpF3QNtlqMMOxOGruNtD3kQz',
+      },*/
+      client: {
+        production: 'Ac_UIbgm52fOPuOXVMnNSTmcj50a6Fy-p3cbzedXSyhHVhKfaZ3FrazrV7CYMQTZmwrDVTMzhQgjDUy9',
       },
       commit: false,
       payment: (data, actions) => {
-        // console.log("data is", data, actions);
         return actions.payment.create({
           payment: {
             transactions: [
-              { amount: { total: this.requestData.amount, currency: 'INR' } }
+              { amount: { total: this.requestData.amount, currency: 'USD' } }
             ]
           }
         });
@@ -58,7 +61,7 @@ export class PaymentPage {
 
     this.event.subscribe('bookingAccepted',(res)=>{
       let item : any = res;
-      console.log('booking Accepted check notification data >>',item);
+      // console.log('booking Accepted check notification data >>',item);
       this.isRequestAccepted = true;
       util.dismissLoader();
       storage.set('currentRoute',JSON.parse(item.booking_info)).then(()=>{
@@ -66,12 +69,6 @@ export class PaymentPage {
           this.navCtrl.setRoot('SetLocationPage');
         });
       })
-      // console.log('JSON.parse(item.booking_info)',JSON.parse(item.booking_info));
-      /*item.types_id = JSON.parse(item.booking_info).id; //set booking id into types_id for live tracking page
-      // console.log('item is >>>>>',item);
-      this.storage.set('currentRoute',item).then(()=>{
-        this.navCtrl.setRoot('LiveTrackingPage');
-      })*/
     })
   }
 
@@ -85,7 +82,6 @@ export class PaymentPage {
     })
   }
   payNow() {
-    // this.navCtrl.push('RequestSendPage')
   }
 
   paypal() {
@@ -137,7 +133,6 @@ export class PaymentPage {
       event.preventDefault();
       this.util.presentLoader('');
       this.stripe.createToken(this.card).then(result=>{
-        // console.log('token >>>',JSON.stringify(result));
         let data : any = result;
         let last4 = data.token.card.last4;
         let cardName = data.token.card.brand;
@@ -181,5 +176,9 @@ export class PaymentPage {
       console.error(error);
       this.util.dismissLoader();
     })
+  }
+
+  openNotification() {
+    this.navCtrl.push('NotificationPage');
   }
 }
