@@ -30,4 +30,7 @@ page-sign-up {
   .text-input {
     margin: 0 !important;
   }
+  ::placeholder {color: white;opacity: 1;}
+  :-ms-input-placeholder {color: white !important;}
+  ::-ms-input-placeholder {color: white !important;}
 }

@@ -35,11 +35,8 @@ export class MyHistoryPage {
         }else {
           this.isCustomer = true;
         }
-        this.getHistory(this.isCustomer,true,this.pageNumber).then(res=>{
-          this.historyList=res;
-          this.historyList.lenght>0?this.isListEmpty=false:this.isListEmpty=true;
+        this.getHistory(this.isCustomer,this.pageNumber,true).then(res=>{
         }).catch(err=>{
-          this.historyList.lenght>0?this.isListEmpty=false:this.isListEmpty=true;
         })
       })
     });
@@ -51,7 +48,7 @@ export class MyHistoryPage {
 
   goDetail(item) {
     // this.navCtrl.push('HistoryDetailPage');
-    this.navCtrl.push("HistoryDetailPage",{detail:item});
+    this.navCtrl.push("HistoryDetailPage",{detail:item,isCustomer:this.isCustomer});
   }
 
   getHistory(isCustomer,pageNumber,isRefresh) {
@@ -65,19 +62,21 @@ export class MyHistoryPage {
       }
       this.user.getHistory(data,this.userData.Authorization,isCustomer).subscribe(res=>{
         let resp : any = res;
-        this.historyList = resp.data;
-        console.log(res);
-        this.historyList.length && this.historyList.length > 0?this.isListEmpty = false:this.isListEmpty = true;
         if (resp.status){
+          if (pageNumber == 1){
+            this.historyList = resp.data;
+          }else {
+            this.historyList = [...this.historyList,...resp.data];
+          }
+          this.pageNumber ++;
+          this.historyList.length && this.historyList.length > 0?this.isListEmpty = false:this.isListEmpty = true;
           resolve(resp.data);
         }else {
           reject(false)
-          this.historyList = [];
         }
         if (isRefresh){
           setTimeout(()=>{
             this.util.dismissLoader();
-            this.historyList.length && this.historyList.length > 0?this.isListEmpty = false:this.isListEmpty = true;
           },500)
         }
       });
@@ -87,7 +86,6 @@ export class MyHistoryPage {
   doRefresh(refresher) {
     this.pageNumber = 1;
     this.getHistory(this.isCustomer,this.pageNumber,false).then(succ=>{
-      // console.log('succ',succ);
       refresher.complete();
     }).catch(err=>{
       console.log(err);

@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Api {
-  // url: string = 'https://alphawizz.com/TowDrive/Api/';
-  url: string = 'https://alphawizz.in/TowDrive/Api/';
+  url: string = 'https://alphawizz.com/TowDrive/Api/';
+  // url: string = 'https://alphawizz.in/TowDrive/Api/';
 
   constructor(public http: HttpClient) {
   }

@@ -29,6 +29,7 @@ export class PaymentPage {
   payPalBtn: any;
   payPalConfig:any;
   isRequestAccepted : boolean = false;
+  priceData:any={};
   constructor(public navCtrl: NavController,
               public util:UtilProvider,
               public storage:Storage,
@@ -38,6 +39,7 @@ export class PaymentPage {
               private payPal: PayPal,
               public navParams: NavParams) {
     this.requestData=navParams.data.requestData;
+    this.priceData=navParams.data.priceData;
     this.payPalConfig = {
       /*env: 'sandbox',*/
       env: 'production',

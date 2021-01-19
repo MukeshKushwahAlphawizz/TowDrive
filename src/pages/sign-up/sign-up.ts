@@ -59,7 +59,7 @@ export class SignUpPage {
       firebaseToken:this.firebaseToken
     }
     if (this.isDriver){
-      this.navCtrl.push('VehicleDetailsPage',{requestData:JSON.stringify(data)});
+      this.navCtrl.push('VehicleDetailsPage',{requestData:JSON.stringify(data),isSocialLogin:false});
     }else {
       this.navCtrl.push('PersonalDetailPage',{requestData:JSON.stringify(data)});
     }
@@ -72,6 +72,7 @@ export class SignUpPage {
       ],
       mobileNumber: [
         { type: "required", message: 'Mobile number is required' },
+        { type: "pattern", message: '*Invalid number' },
         { type: "minlength", message: '*Minimum length should be 10' },
         { type: "maxlength", message: '*Maximum length should be 12' }
       ],
@@ -85,6 +86,8 @@ export class SignUpPage {
         { type: "maxlength", message: '*Maximum length should be 12' }
       ]
     };
+    /*var mobileNumberRegex = /^(?:(?:00)?44|0)7(?:[45789]\d{2}|624)\d{6}$/;
+    if (phoneNumber.replace(/\D/g, '').test(mobileNumberRegex)) alert('Phone number is valid!');*/
     this.signUpForm = this.formBuilder.group(
       {
         username: new FormControl(
@@ -102,6 +105,7 @@ export class SignUpPage {
         ),
         mobileNumber: new FormControl(
           "", Validators.compose([Validators.required,
+            Validators.pattern('^([0|\\+[0-9]{1,5})?([7-9][0-9]{9})$'),
             Validators.minLength(10),
             Validators.maxLength(12)
           ])
@@ -166,27 +170,54 @@ export class SignUpPage {
       Firebase_token:this.firebaseToken,
       social_login:type
     }
-
-    this.user.socialLogin(data,this.role).subscribe(res=>{
-      let resp : any = res;
-      setTimeout(()=>{
-        this.util.dismissLoader();
-      },500)
-      if (resp.status){
-        let userData : any = resp.data;
-        this.storage.set('token',userData.Authorization);
-        this.storage.set('isSocialLogin',true);
-        this.storage.set('userData',JSON.stringify(userData)).then(()=>{
-          this.navCtrl.setRoot('MenuPage');
-        });
-      }else {
-        this.util.presentToast(resp.message);
+    if (this.isDriver){
+      let req = {
+        email:email,
+        username:name
       }
+      this.user.socialCheck(req,this.role).subscribe(res=> {
+        let resp: any = res;
+        setTimeout(() => {
+          this.util.dismissLoader();
+        }, 500)
+        if (resp.status) {
+          //user already registered
+          let userData : any = resp.data;
+          this.storage.set('token',userData.Authorization);
+          this.storage.set('isSocialLogin',true);
+          this.storage.set('userData',JSON.stringify(userData)).then(()=>{
+            this.navCtrl.setRoot('MenuPage');
+          });
+        }else {
+          //user not registered, need to sign up
+          this.navCtrl.push('VehicleDetailsPage',{requestData:JSON.stringify(data),isSocialLogin:true});
+        }
+      },error => {
+        this.util.dismissLoader();
+      })
+    }else {
+      this.user.socialLogin(data,this.role).subscribe(res=>{
+        let resp : any = res;
+        setTimeout(()=>{
+          this.util.dismissLoader();
+        },500)
+        if (resp.status){
+          let userData : any = resp.data;
+          this.storage.set('token',userData.Authorization);
+          this.storage.set('isSocialLogin',true);
+          this.storage.set('userData',JSON.stringify(userData)).then(()=>{
+            this.navCtrl.setRoot('MenuPage');
+          });
+        }else {
+          this.util.presentToast(resp.message);
+        }
 
-    },error => {
-      this.util.dismissLoader();
-    })
+      },error => {
+        this.util.dismissLoader();
+      })
+    }
   }
+
   getFirebaseToken() {
     this.fcm.subscribeToTopic('marketing');
     this.fcm.getToken().then(token => {

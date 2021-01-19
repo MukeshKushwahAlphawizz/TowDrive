@@ -3,6 +3,7 @@ import {Events, IonicPage, Nav,NavParams, NavController, Platform} from 'ionic-a
 import {Storage} from "@ionic/storage";
 import { SocialSharing } from '@ionic-native/social-sharing';
 import {USERTYPE_DRIVER, UtilProvider} from "../../providers/util/util";
+import {User} from "../../providers";
 
 
 @IonicPage()
@@ -20,6 +21,8 @@ export class MenuPage {
   constructor(public navCtrl: NavController,
               public storage:Storage,
               public util:UtilProvider,
+              public user:User,
+              public event:Events,
               public platform:Platform,
               private socialSharing: SocialSharing,
               public navParams: NavParams) {
@@ -78,11 +81,23 @@ export class MenuPage {
 
   exit() {
     this.util.presentConfirm('Confirm Exit','Are you Sure, you want to Exit?').then(res=>{
-      // if (resp.status){
-        this.storage.set('userData',null);
-        this.navCtrl.setRoot('SelectTypePage');
-      // }
-      // this.platform.exitApp();
+      this.util.presentLoader();
+      this.user.logoutUser(this.userData.Authorization).subscribe(res=>{
+        let resp : any = res;
+        if (resp.status){
+          this.event.publish('logout','');
+          this.storage.set('userData',null);
+          this.navCtrl.setRoot('SelectTypePage');
+        }else {
+          this.util.presentAlert('',resp.message);
+        }
+        setTimeout(()=>{
+          this.util.dismissLoader();
+        },300);
+      },error => {
+        console.error(error);
+        this.util.dismissLoader();
+      })
     }).catch(err=>{})
   }
 }

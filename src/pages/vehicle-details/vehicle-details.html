@@ -29,7 +29,8 @@
     </div>
 
     <input [(ngModel)]="address" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Address">
-    <ion-item margin-top class="input-box small-text text-white" no-lines>
+
+    <ion-item margin-top class="input-box small-text text-white" style="padding: 0 !important; padding-left: 8pt !important;" no-lines>
       <ion-label item-left class="medium-text text-white label-select">Select Service</ion-label>
       <ion-select item-right [(ngModel)]="vehicleService" class="medium-text select-option">
         <ion-option value="1">Tyre Change</ion-option>
@@ -37,9 +38,22 @@
         <ion-option value="3">Scrap Vehicle</ion-option>
         <ion-option value="4">Battery Start</ion-option>
         <ion-option value="5">Vehicle Delivery</ion-option>
-        <ion-option value="6">Mobile Machanic</ion-option>
+        <ion-option value="6">Mobile Mechanic</ion-option>
       </ion-select>
     </ion-item>
+
+    <h3 margin-top padding-top class="text-white">Bank Details</h3>
+    <input [(ngModel)]="bank_name" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Bank Name">
+    <input [(ngModel)]="account_number" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Account Number">
+    <input [(ngModel)]="account_holder_name" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Account Holder Name">
+    <input [(ngModel)]="bank_code" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Bank Code">
+    <input [(ngModel)]="branch_sort_code" class="full-input input-box small-text text-white" margin-top type="text" placeholder="Branch Sort Code">
+
+    <div class="input-box small-text text-white" margin-top>
+      <label for="backgroundCheck">Bank Statement</label>
+      <label class="right-align image-name" for="bankStatement"><span>{{this.bankStatement&&this.bankStatement.name?this.bankStatement.name:''}}</span><ion-icon *ngIf="!(this.bankStatement&&this.bankStatement.name)" class="upload-icon" name="md-cloud-upload"></ion-icon></label>
+      <input name="bankStatement" id="bankStatement" class="fileInput" type="file" (change)="bankStatementEvent($event)"/>
+    </div>
 
     <div style="margin: 35pt 0">
       <button (click)="save()" class="small-text" ion-button full>

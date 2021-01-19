@@ -20,10 +20,10 @@ export class SetLocationPage {
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
   autocompleteItemsSearch: any = [];
+  autocompleteItemsSearchDestination: any = [];
   map: any = '';
   myLocation: any = '';
   isRequestSent:boolean=false;
-  marker:any='';
   lat: any = '';
   lng: any = '';
   address: any = '';
@@ -39,6 +39,12 @@ export class SetLocationPage {
   booking_id: any = '';
   currentRoute: any = '';
   driverLocation: any = '';
+  dropLocation: any = '';
+  selectedService: any = '';
+  droplat: any = '';
+  droplng: any = '';
+  sourceMarker = new google.maps.Marker;
+  destinaitonMarker = new google.maps.Marker;
   constructor(public navCtrl: NavController,
               public geolocation: Geolocation,
               public util: UtilProvider,
@@ -66,7 +72,7 @@ export class SetLocationPage {
       this.isRequestSent = isRequestSent;
       if (this.isRequestSent){
         this.storage.get('tripStartCustomerData').then(routeDetail=>{
-          console.log('SetLocationPage routeDetail >>>',routeDetail);
+          // console.log('SetLocationPage routeDetail >>>',routeDetail);
           this.initMapAccept();
           if (routeDetail){
             this.routeDetail = routeDetail;
@@ -94,16 +100,26 @@ export class SetLocationPage {
         })
 
       }else {
-        this.storage.get('myLocationObject').then(myLocationObject=>{
-          this.myLocation = myLocationObject.location;
-          this.lat = myLocationObject.lat;
-          this.lng = myLocationObject.lng;
-          this.address = myLocationObject.address;
-          this.addNewMarker(new google.maps.LatLng(myLocationObject.lat,myLocationObject.lng));
+
+        this.storage.get('selectedService').then(selectedService=>{
+          this.selectedService = selectedService;
+          console.log('this.selectedService',this.selectedService);
+          this.storage.get('myLocationObject').then(myLocationObject=>{
+            this.myLocation = myLocationObject.location;
+            this.lat = myLocationObject.lat;
+            this.lng = myLocationObject.lng;
+            this.address = myLocationObject.address;
+            this.addSourceMarker(new google.maps.LatLng(myLocationObject.lat,myLocationObject.lng));
+          })
         })
+
         this.initMap();
       }
     })
+  }
+  ngOnDestroy(){
+    // console.log('ngOnDestroy called in SetLocation page !!!!');
+    this.storage.set('selectedService','');
   }
 
   getDriverLatLng() {
@@ -163,8 +179,8 @@ export class SetLocationPage {
   }
 
 
-  change() {
-    this.myLocation = '';
+  change(isDrop) {
+    isDrop?this.dropLocation = '':this.myLocation = '';
   }
 
   set() {
@@ -175,9 +191,45 @@ export class SetLocationPage {
       }
       this.navCtrl.setRoot('MenuPage');
     }else {
-      this.storage.set('myLocationObject',{location:this.myLocation,lat:this.lat,lng:this.lng,address:this.address}).then(()=>{
+      if (this.selectedService && this.selectedService !==''){
+        if (this.dropLocation ===''){
+          this.util.presentToast('Please select the drop location');
+          return;
+        }
+        this.util.presentLoader();
+        let data = {
+          service_id:this.selectedService,
+          pick_location:this.myLocation,
+          pick_latitude:this.lat,
+          pick_longitude:this.lng,
+          drop_location:this.dropLocation,
+          drop_latitude:this.droplat,
+          drop_longitude:this.droplng,
+        }
+        this.user.getDistancePrice(data).subscribe(res=>{
+          this.util.dismissLoader();
+          let resp : any = res;
+          if (resp.status){
+            let dropData = {
+              drop_location:this.dropLocation,
+              drop_latitude:this.droplat,
+              drop_longitude:this.droplng,
+            }
+            this.navCtrl.push('SetVehiclePage',{category:this.selectedService, priceData:resp.data,dropData:dropData});
+          }else {
+            this.util.presentAlert('',resp.message);
+          }
+        },err=>{
+          console.log(err);
+          this.util.dismissLoader();
+        })
+
+      }else {
+        /*this.storage.set('myLocationObject',{location:this.myLocation,lat:this.lat,lng:this.lng,address:this.address}).then(()=>{
+          this.navCtrl.pop();
+        });*/
         this.navCtrl.pop();
-      });
+      }
     }
   }
 
@@ -223,15 +275,66 @@ export class SetLocationPage {
     this.util.geocodeAddress(geocoder,this.myLocation).then(result=>{
       this.lat = result['lat'];
       this.lng = result['lng'];
-      this.addNewMarker(new google.maps.LatLng(result['lat'], result['lng']));
+      this.storage.set('myLocationObject',{location:this.myLocation,lat:this.lat,lng:this.lng,address:this.address})
+      this.addSourceMarker(new google.maps.LatLng(result['lat'], result['lng']));
+      if (this.droplat !=='' && this.droplng !== ''){
+        let to = new google.maps.LatLng(this.droplat, this.droplng);
+        let from = new google.maps.LatLng(this.lat, this.lng);
+        this.drawLine(from,to);
+      }
     }).catch(err=>{
     });
   }
-  addNewMarker(location) {
-    if (this.marker){
-      this.marker.setMap(null);
+
+  onChangeDropLocation(event) {
+    if (event == '') {
+      this.autocompleteItemsSearchDestination = [];
+      return;
     }
-    this.marker = new google.maps.Marker({
+    const me = this;
+    this.service.getPlacePredictions({ input: event }, function (predictions, status) {
+      me.autocompleteItemsSearchDestination = [];
+      me.zone.run(function () {
+        if (predictions) {
+          predictions.forEach(function (prediction) {
+            me.autocompleteItemsSearchDestination.push(prediction);
+          });
+        }
+      });
+    });
+  }
+  chooseItemDestination(sourceData: any) {
+    this.dropLocation = sourceData.description;
+    this.autocompleteItemsSearchDestination = [];
+    let geocoder = new google.maps.Geocoder;
+    this.util.geocodeAddress(geocoder,this.dropLocation).then(result=>{
+      this.droplat = result['lat'];
+      this.droplng = result['lng'];
+      this.addDestinationMarker(new google.maps.LatLng(result['lat'], result['lng']));
+      let to = new google.maps.LatLng(this.droplat, this.droplng);
+      let from = new google.maps.LatLng(this.lat, this.lng);
+      this.drawLine(from,to);
+    }).catch(err=>{
+    });
+  }
+
+  addSourceMarker(location) {
+    if (this.sourceMarker){
+      this.sourceMarker.setMap(null);
+    }
+    this.sourceMarker = new google.maps.Marker({
+      position: location,
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+    });
+    this.map.setCenter(location);
+  }
+
+  addDestinationMarker(location) {
+    if (this.destinaitonMarker){
+      this.destinaitonMarker.setMap(null);
+    }
+    this.destinaitonMarker = new google.maps.Marker({
       position: location,
       map: this.map,
       animation: google.maps.Animation.DROP,
@@ -275,6 +378,25 @@ export class SetLocationPage {
         strokeColor: '#f27120'
       },
       suppressMarkers: true
+    });
+  }
+  drawLine(from,to){
+    const that = this;
+    this.directionsService.route({
+      origin:from,
+      destination:to,
+      travelMode: 'DRIVING'
+    }, (response, status) => {
+      if (status === 'OK') {
+        that.directionsDisplay.setDirections(response);
+        this.directionsDisplay.setMap(this.map);
+        this.directionsDisplay.setOptions({
+          polylineOptions: {
+            strokeColor: '#f27120'
+          },
+          suppressMarkers: true
+        });
+      }
     });
   }
 

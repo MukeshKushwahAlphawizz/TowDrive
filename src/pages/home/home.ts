@@ -38,7 +38,12 @@ export class HomePage {
   }
 
   openLocationPage(category) {
-    this.navCtrl.push('SetVehiclePage',{category:category});
+    this.storage.set('isRequestSent',false).then(()=>{
+      this.storage.set('selectedService',category).then(()=> {
+        this.navCtrl.push('SetLocationPage');
+      });
+    });
+    // this.navCtrl.push('SetVehiclePage',{category:category});
   }
 
   openNotif() {

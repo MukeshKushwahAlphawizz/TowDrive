@@ -30,19 +30,29 @@ export class SetVehiclePage {
     battery_model:'',
     battery_capacity:'',
     payment_type:'',
-    token:''
+    token:'',
+    drop_location:'',
+    drop_latitude:'',
+    drop_longitude:'',
   }
+  priceData:any={};
   constructor(public navCtrl: NavController,
               public storage : Storage,
               public util : UtilProvider,
               public navParams: NavParams) {
     this.requestData.service_id = navParams.data.category;
+    this.priceData = navParams.data.priceData;
+    this.requestData.drop_location = navParams.data.dropData.drop_location;
+    this.requestData.drop_latitude = navParams.data.dropData.drop_latitude;
+    this.requestData.drop_longitude = navParams.data.dropData.drop_longitude;
+    this.requestData.amount = parseFloat(this.priceData.service_charge)+parseFloat(this.priceData.distance_charge);
+    console.log(this.requestData);
     storage.get('myLocationObject').then(myLocationObject=>{
       this.requestData.current_location = myLocationObject.location;
       this.requestData.address = myLocationObject.address;
       this.requestData.latitude = myLocationObject.lat;
       this.requestData.longitude = myLocationObject.lng;
-    })
+    });
   }
 
   ionViewDidLoad() {
@@ -111,6 +121,6 @@ export class SetVehiclePage {
         return;
       }
     }
-    this.navCtrl.push('PaymentPage',{requestData:this.requestData});
+    this.navCtrl.push('PaymentPage',{requestData:this.requestData,priceData:this.priceData});
   }
 }

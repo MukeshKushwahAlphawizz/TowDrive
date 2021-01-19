@@ -148,28 +148,54 @@ export class LoginPage {
       Firebase_token:this.firebaseToken,
       social_login:type
     }
-
-    this.user.socialLogin(data,this.role).subscribe(res=>{
-      let resp : any = res;
-      console.log('social login response >>',resp);
-      setTimeout(()=>{
-        this.util.dismissLoader();
-      },500)
-      if (resp.status){
-        let userData : any = resp.data;
-        this.storage.set('isSocialLogin',true);
-        this.storage.set('token',userData.Authorization);
-        this.storage.set('userData',JSON.stringify(userData)).then(()=>{
-          this.navCtrl.setRoot('MenuPage');
-        });
-      }else {
-        this.util.presentToast(resp.message);
+    if (this.isDriver){
+      let req = {
+        email:email,
+        username:name
       }
+      this.user.socialCheck(req,this.role).subscribe(res=> {
+        let resp: any = res;
+        setTimeout(() => {
+          this.util.dismissLoader();
+        }, 500)
+        if (resp.status) {
+          //user already registered
+          let userData : any = resp.data;
+          this.storage.set('token',userData.Authorization);
+          this.storage.set('isSocialLogin',true);
+          this.storage.set('userData',JSON.stringify(userData)).then(()=>{
+            this.navCtrl.setRoot('MenuPage');
+          });
+        }else {
+          //user not registered, need to sign up
+          this.navCtrl.push('VehicleDetailsPage',{requestData:JSON.stringify(data),isSocialLogin:true});
+        }
+      },error => {
+        this.util.dismissLoader();
+      })
+    }else {
+      this.user.socialLogin(data,this.role).subscribe(res=>{
+        let resp : any = res;
+        setTimeout(()=>{
+          this.util.dismissLoader();
+        },500)
+        if (resp.status){
+          let userData : any = resp.data;
+          this.storage.set('token',userData.Authorization);
+          this.storage.set('isSocialLogin',true);
+          this.storage.set('userData',JSON.stringify(userData)).then(()=>{
+            this.navCtrl.setRoot('MenuPage');
+          });
+        }else {
+          this.util.presentToast(resp.message);
+        }
 
-    },error => {
-      this.util.dismissLoader();
-    })
+      },error => {
+        this.util.dismissLoader();
+      })
+    }
   }
+
   getFirebaseToken() {
     this.fcm.subscribeToTopic('marketing');
     this.fcm.getToken().then(token => {

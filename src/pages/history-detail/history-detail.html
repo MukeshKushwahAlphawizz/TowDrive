@@ -21,7 +21,7 @@
     <ion-item no-lines>
       <!--<div item-left class="round" style="background: #890C26">R</div>-->
       <img item-left class="img-user" [src]="detailData.image&&detailData.image!==''?detailData.image:'assets/img/user-default.png'">
-      <div class="big-text">{{ detailData.driver_name }}</div>
+      <div class="big-text">{{ isCustomer?detailData.driver_name:detailData.username }}</div>
     </ion-item>
   </div>
   <div class="saperator-grey"></div>

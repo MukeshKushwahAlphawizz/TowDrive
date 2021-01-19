@@ -26,30 +26,28 @@ export class DriverHomePage {
     public events: Events,
     public user: User,
     public navParams: NavParams) {
+    events.subscribe('logout',data=>{
+      if (this.interval){
+        clearInterval(this.interval)
+      }
+    })
     events.subscribe('bookingRequest',data=>{
       this.getAllRequest(true).then(data => {
-        this.allRequest = data;
-        this.allRequest.length > 0 ? this.isListEmpty = false : this.isListEmpty = true;
       }).catch(err => {
-        this.allRequest.length > 0 ? this.isListEmpty = false : this.isListEmpty = true;
       });
     })
   }
 
   ionViewDidLoad() {
-    this.getDriverLocation();
     this.storage.get('userData').then(userData => {
       this.userData = JSON.parse(userData);
-      // this.getAllRequest(false);
       this.getAllRequest(true).then(data => {
-        this.allRequest = data;
-        this.allRequest.length > 0 ? this.isListEmpty = false : this.isListEmpty = true;
       }).catch(err => {
-        this.allRequest.length > 0 ? this.isListEmpty = false : this.isListEmpty = true;
       });
       if (this.interval){
         clearInterval(this.interval);
       }
+      this.getDriverLocation();
       this.interval = setInterval(() => {
         this.getDriverLocation();
       }, 8000);
@@ -83,10 +81,7 @@ export class DriverHomePage {
           this.navCtrl.push('TrackLocationPage');
         }else {
           this.getAllRequest(true).then(data => {
-            this.allRequest = data;
-            this.allRequest.length > 0 ? this.isListEmpty = false : this.isListEmpty = true;
           }).catch(err => {
-            this.allRequest.length > 0 ? this.isListEmpty = false : this.isListEmpty = true;
           });
         }
       }
@@ -125,17 +120,14 @@ export class DriverHomePage {
         if (resp.status){
           this.myallRequest = resp.data;
           this.allRequest = this.myallRequest;
+          resolve(resp.data);
         }else {
           if (showLoader){
             this.allRequest = [];
           }
-        }
-        if (resp.status) {
-          resolve(resp.data);
-        } else {
-          // this.util.presentToast(resp.message);
           reject(resp.message);
         }
+        // console.log('this.allRequest >>',this.allRequest);
         this.allRequest.length && this.allRequest.length > 0?this.isListEmpty = false:this.isListEmpty = true;
         if (showLoader) {
           setTimeout(() => {
@@ -154,13 +146,10 @@ export class DriverHomePage {
   doRefresh(refresher) {
     this.isListEmpty = false;
     this.getAllRequest(false).then(data => {
-      this.allRequest = data;
-      this.allRequest.length > 0 ? this.isListEmpty = false : this.isListEmpty = true;
       refresher.complete();
     }).catch(err => {
       console.log(err);
       refresher.complete();
-      this.allRequest.length > 0 ? this.isListEmpty = false : this.isListEmpty = true;
     })
   }
 }

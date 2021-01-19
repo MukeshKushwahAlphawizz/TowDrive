@@ -32,6 +32,10 @@ export class User {
   trip_start_end : string = 'Drivers/trip_start_end';
   driver_history_list : string = 'Drivers/my_history_list';
 
+  logout : string = 'Authentication/logout';
+  social_check : string = 'SocialLogin/social_check';
+  send_pickup_location : string = 'Users/send_pickup_location';
+
   constructor(public api: Api) { }
 
   login(accountInfo: any,role:any) {
@@ -148,6 +152,20 @@ export class User {
   getRecommendedService(token:any) {
     let header = new HttpHeaders({'Authorizations':token});
     let res = this.api.get(this.recommended_service, '',{headers:header}).share();
+    return res;
+  }
+  logoutUser(token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let res = this.api.post(this.logout, '',{headers:header}).share();
+    return res;
+  }
+  socialCheck(data,token:any) {
+    let header = new HttpHeaders({'Authorizations':token});
+    let res = this.api.post(this.social_check, data,{headers:header}).share();
+    return res;
+  }
+  getDistancePrice(data) {
+    let res = this.api.post(this.send_pickup_location, data).share();
     return res;
   }
 }

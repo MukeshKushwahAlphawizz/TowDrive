@@ -3,21 +3,35 @@
   <div #mapElement id="mapElement" [ngStyle]="{'height':isRequestSent?'50%':'70%'}" style="width: 100%;"></div>
   <div *ngIf="!isRequestSent" class="main-div" margin-bottom>
     <div class="saperator-grey"></div>
-    <div class="medium-text montserrat-font bold-font" padding>Select Location</div>
+    <div class="medium-text montserrat-font bold-font" padding>Select Your Location</div>
     <div class="saperator-grey"></div>
     <div padding-top padding-left padding-right>
       <div class="text-grey small-text">Current Location</div>
       <ion-item no-padding no-lines>
         <ion-icon item-left class="text-grey pin-icon" name="pin"></ion-icon>
         <!--<div item-start class="medium-text bold-font">Park Slope</div>-->
-        <input (input)='onChangeLocation($event.target.value)' item-start class="location-input" type="text" [(ngModel)]="myLocation">
-        <div (click)="change()" item-right class="small-text" style="color: red" >Change</div>
+        <input text-wrap (input)='onChangeLocation($event.target.value)' item-start class="location-input" type="text" [(ngModel)]="myLocation">
+        <div (click)="change(false)" item-right class="small-text" style="color: red" >Change</div>
       </ion-item>
       <div class="location-option" *ngFor="let item of this.autocompleteItemsSearch" tappable
            (click)="chooseItemSource(item)">
         <div>{{item.description}}</div>
       </div>
     </div>
+
+    <div *ngIf="selectedService && selectedService !==''" padding-top padding-left padding-right>
+      <div class="text-grey small-text">Select Drop Location</div>
+      <ion-item no-padding no-lines>
+        <ion-icon item-left class="text-grey pin-icon" name="pin"></ion-icon>
+        <input text-wrap (input)='onChangeDropLocation($event.target.value)' item-start class="location-input" type="text" [(ngModel)]="dropLocation">
+        <div (click)="change(true)" item-right class="small-text" style="color: red" >Change</div>
+      </ion-item>
+      <div class="location-option" *ngFor="let item of this.autocompleteItemsSearchDestination" tappable
+           (click)="chooseItemDestination(item)">
+        <div>{{item.description}}</div>
+      </div>
+    </div>
+
     <div class="saperator-grey"></div>
     <input [(ngModel)]="address" padding placeholder="Complete Address (optional)" class="full-input" type="text">
     <div class="saperator-grey"></div>

@@ -55,9 +55,19 @@
       </div>
     </div>
     <ion-item margin-top no-lines class="medium-text">
-      <div>Service Charge</div>
-      <div item-right>£{{requestData.amount}}</div>
+      <div>Total Distance : {{priceData.total_distance}} miles</div>
+      <div style="margin-top: 5pt">Distance Price : £{{priceData.distance_charge}}</div>
+      <ion-item no-padding style="margin-top: 5pt" no-lines class="medium-text">
+        <div>Service Charge</div>
+        <div item-right>£{{priceData.service_charge}}</div>
+      </ion-item>
     </ion-item>
+
+    <!--<ion-item margin-top no-lines class="medium-text">
+      <div>Service Charge</div>
+      <div item-right>£{{priceData.service_charge}}</div>
+    </ion-item>-->
+
     <button (click)="pay()" class="top-margin" ion-button full>Pay</button>
   </div>
 </ion-content>
